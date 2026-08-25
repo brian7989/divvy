@@ -134,7 +134,19 @@
     flex: 0 0 auto;
     margin: 0;
     padding-bottom: max(24px, calc(env(safe-area-inset-bottom) + 16px));
-    box-shadow: 0 -8px 24px rgb(24 22 34 / 5%);
+    border-top: 0;
+    box-shadow: none;
+  }
+
+  .sheetFooter::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    height: 24px;
+    background: linear-gradient(to bottom, transparent, white);
+    pointer-events: none;
   }
 
   .numberInput :global(.mantine-Input-input),

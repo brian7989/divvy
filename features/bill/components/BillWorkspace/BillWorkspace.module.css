@@ -338,9 +338,17 @@ button.methodCard:hover {
     width: calc(100% + 28px);
     margin: 0 -14px;
     padding: 10px 14px max(12px, env(safe-area-inset-bottom));
-    border-top: 1px solid rgb(24 22 34 / 8%);
     background: #f8f7ff;
-    box-shadow: 0 -8px 24px rgb(24 22 34 / 5%);
+  }
+  .stepFooter::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    height: 32px;
+    background: linear-gradient(to bottom, transparent, #f8f7ff);
+    pointer-events: none;
   }
   .stepIcon { width: 44px; height: 44px; margin-bottom: 8px; font-size: 22px; border-radius: 16px 16px 16px 7px; }
   .eyebrow { margin-bottom: 5px; font-size: 10px; }

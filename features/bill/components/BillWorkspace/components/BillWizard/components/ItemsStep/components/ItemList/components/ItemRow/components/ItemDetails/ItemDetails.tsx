@@ -11,6 +11,9 @@ export function ItemDetails({ itemId }: Props) {
   );
   const assignItem = useBillStore((state) => state.assignItem);
   if (!item) return null;
+  const total = formatMoney(getItemTotal(item));
+  const adjusted = item.discountCents > 0;
+
   return (
     <UnstyledButton
       onClick={() => assignItem(itemId)}
@@ -26,12 +29,14 @@ export function ItemDetails({ itemId }: Props) {
       <Text fw={700} size="sm">
         {item.name}
       </Text>
-      <Text c="dimmed" size="xs">
-        {item.quantity > 1 ? `${item.quantity} × ` : ""}
-        {formatMoney(item.unitPriceCents)}
-        {item.discountCents
-          ? ` − ${formatMoney(item.discountCents)} discount · ${formatMoney(getItemTotal(item))} total`
-          : ""}
+      <Text
+        c="dimmed"
+        size="xs"
+        title={adjusted ? "Adjusted after discount" : undefined}
+        aria-label={adjusted ? `${total}, adjusted after discount` : undefined}
+      >
+        {total}
+        {adjusted ? "*" : ""}
       </Text>
     </UnstyledButton>
   );

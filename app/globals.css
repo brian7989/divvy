@@ -1,5 +1,7 @@
 :root {
-  --app-background: #f8f7ff;
+  --app-background:
+    radial-gradient(circle at 8% 12%, #dfffa1 0, transparent 25rem),
+    radial-gradient(circle at 92% 28%, #e3d8ff 0, transparent 24rem), #f8f7ff;
   --app-ink: #181622;
 }
 

@@ -15,10 +15,17 @@ const appFont = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Divvy — Split the bill, not the vibe",
   description: "A fast, friendly way to split shared expenses fairly.",
-  appleWebApp: { capable: true, title: "Divvy", statusBarStyle: "default" },
+  appleWebApp: {
+    capable: true,
+    title: "Divvy",
+    statusBarStyle: "black-translucent",
+  },
 };
 
-export const viewport: Viewport = { themeColor: "#754cff" };
+export const viewport: Viewport = {
+  themeColor: "#754cff",
+  viewportFit: "cover",
+};
 
 export default function RootLayout({
   children,

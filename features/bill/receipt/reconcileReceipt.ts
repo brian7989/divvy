@@ -7,7 +7,8 @@ export function reconcileReceipt(receipt: ParsedReceipt): string[] {
   const warnings: string[] = [];
 
   receipt.items.forEach((item) => {
-    const calculated = item.unitPriceCents * item.quantity;
+    const calculated =
+      item.unitPriceCents * item.quantity - item.discountCents;
     if (Math.abs(calculated - item.lineTotalCents) > CENT_TOLERANCE)
       warnings.push(`Check ${item.name}'s quantity and price.`);
   });
@@ -42,4 +43,3 @@ export function reconcileReceipt(receipt: ParsedReceipt): string[] {
 
   return [...new Set(warnings)];
 }
-

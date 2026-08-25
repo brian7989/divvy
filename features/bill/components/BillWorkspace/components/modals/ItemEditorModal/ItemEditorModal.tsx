@@ -15,7 +15,12 @@ import { centsToDollars, dollarsToCents } from "@/features/bill/domain/money";
 import styles from "../BillModals.module.css";
 import { QuantityInput } from "./components/QuantityInput/QuantityInput";
 
-type FormValues = { name: string; price: number; quantity: number };
+type FormValues = {
+  name: string;
+  price: number;
+  quantity: number;
+  discount: number;
+};
 
 export function ItemEditorModal() {
   const itemId = useBillStore((state) => state.editingItemId);
@@ -27,11 +32,16 @@ export function ItemEditorModal() {
   const saveItem = useBillStore((state) => state.saveItem);
   const removeItem = useBillStore((state) => state.removeItem);
   const form = useForm<FormValues>({
-    initialValues: { name: "", price: 0, quantity: 1 },
+    initialValues: { name: "", price: 0, quantity: 1, discount: 0 },
     validate: {
       name: (value) => (value.trim() ? null : "Enter an item name"),
       price: (value) => (value > 0 ? null : "Enter a price"),
       quantity: (value) => (value >= 1 ? null : "Minimum 1"),
+      discount: (value, values) =>
+        dollarsToCents(value) <=
+        dollarsToCents(values.price) * Number(values.quantity)
+          ? null
+          : "Discount cannot exceed item total",
     },
   });
 
@@ -42,8 +52,9 @@ export function ItemEditorModal() {
             name: item.name,
             price: centsToDollars(item.unitPriceCents),
             quantity: item.quantity,
+            discount: centsToDollars(item.discountCents),
           }
-        : { name: "", price: 0, quantity: 1 },
+        : { name: "", price: 0, quantity: 1, discount: 0 },
     );
     form.resetDirty();
     // Form intentionally resets only when the selected item changes.
@@ -55,6 +66,7 @@ export function ItemEditorModal() {
       id: item?.id ?? createId(),
       name: values.name.trim(),
       unitPriceCents: dollarsToCents(values.price),
+      discountCents: dollarsToCents(values.discount),
       quantity: Number(values.quantity),
       ownerIds: item?.ownerIds ?? [],
     });
@@ -116,6 +128,17 @@ export function ItemEditorModal() {
                 error={form.errors.quantity}
               />
             </div>
+            <NumberInput
+              className={styles.numberInput}
+              size="md"
+              label="Item discount"
+              description="Applied to this full line"
+              prefix="$"
+              decimalScale={2}
+              min={0}
+              hideControls
+              {...form.getInputProps("discount")}
+            />
           </Stack>
         </div>
         <div className={styles.sheetFooter}>

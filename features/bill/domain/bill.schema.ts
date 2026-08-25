@@ -12,9 +12,13 @@ export const BillItemSchema = z.object({
   id: z.string().min(1),
   name: z.string().trim().min(1),
   unitPriceCents: z.number().int().nonnegative(),
+  discountCents: z.number().int().nonnegative().default(0),
   quantity: z.number().int().positive(),
   ownerIds: z.array(z.string()),
-});
+}).refine(
+  (item) => item.discountCents <= item.unitPriceCents * item.quantity,
+  { message: "Discount cannot exceed the item total", path: ["discountCents"] },
+);
 
 /** Runtime contract for a fee or discount applied to a bill. */
 export const AdjustmentSchema = z.object({

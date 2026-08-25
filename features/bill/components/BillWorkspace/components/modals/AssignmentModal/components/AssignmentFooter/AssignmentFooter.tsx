@@ -1,6 +1,7 @@
 import { Button, Group, Stack, Text } from "@mantine/core";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { formatMoney } from "@/features/bill/domain/money";
+import { getItemTotal } from "@/features/bill/domain/getItemTotal";
 import styles from "../../../BillModals.module.css";
 
 export function AssignmentFooter() {
@@ -12,7 +13,7 @@ export function AssignmentFooter() {
   const editAssignedItem = useBillStore((state) => state.editAssignedItem);
   if (!item) return null;
   const perPerson = item.ownerIds.length
-    ? Math.floor((item.unitPriceCents * item.quantity) / item.ownerIds.length)
+    ? Math.floor(getItemTotal(item) / item.ownerIds.length)
     : 0;
   return (
     <Stack className={styles.assignmentFooter}>

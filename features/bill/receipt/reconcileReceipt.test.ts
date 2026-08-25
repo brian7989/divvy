@@ -10,6 +10,7 @@ const receipt: ParsedReceipt = {
       name: "Soda",
       quantity: 2,
       unitPriceCents: 250,
+      discountCents: 0,
       lineTotalCents: 500,
     },
   ],

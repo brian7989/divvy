@@ -2,6 +2,7 @@ import type { StateCreator } from "zustand";
 import { createBill, createId } from "@/features/bill/domain/bill.factory";
 import type { Bill } from "@/features/bill/domain/bill.schema";
 import type { ParsedReceipt } from "@/features/bill/receipt/receipt.schema";
+import { getAdjustmentLabel } from "@/features/bill/domain/getAdjustmentLabel";
 import type { BillSlice, BillStore } from "../bill-store.types";
 
 /** Stamps a changed bill so persistence and future sync logic can identify it. */
@@ -28,6 +29,7 @@ function mergeReceipt(bill: Bill, receipt: ParsedReceipt): Bill {
         id: createId(),
         name: item.name,
         unitPriceCents: item.unitPriceCents,
+        discountCents: item.discountCents,
         quantity: item.quantity,
         ownerIds: [],
       })),
@@ -39,6 +41,7 @@ function mergeReceipt(bill: Bill, receipt: ParsedReceipt): Bill {
       ...receipt.adjustments.map((adjustment) => ({
         id: createId(),
         ...adjustment,
+        label: getAdjustmentLabel(adjustment.label, adjustment.kind),
       })),
     ],
   };

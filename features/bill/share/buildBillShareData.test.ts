@@ -17,6 +17,7 @@ const bill: Bill = {
       id: "shared",
       name: "Pizza",
       unitPriceCents: 1000,
+      discountCents: 0,
       quantity: 1,
       ownerIds: ["a", "b", "c"],
     },

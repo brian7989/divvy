@@ -1,6 +1,7 @@
 import { Group, Text } from "@mantine/core";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { formatMoney } from "@/features/bill/domain/money";
+import { getItemTotal } from "@/features/bill/domain/getItemTotal";
 
 export function AssignmentHeader() {
   const itemId = useBillStore((state) => state.assigningItemId);
@@ -18,7 +19,7 @@ export function AssignmentHeader() {
           Who shared this?
         </Text>
       </div>
-      <Text fw={800}>{formatMoney(item.unitPriceCents * item.quantity)}</Text>
+      <Text fw={800}>{formatMoney(getItemTotal(item))}</Text>
     </Group>
   );
 }

@@ -1,5 +1,6 @@
 import type { Bill, Person } from "./bill.schema";
 import { allocateCents, type Cents } from "./money";
+import { getItemTotal } from "./getItemTotal";
 
 export type PersonShare = {
   person: Person;
@@ -26,7 +27,7 @@ export function calculateBill(bill: Bill): BillTotals {
   let unassignedCount = 0;
 
   for (const item of bill.items) {
-    const total = item.unitPriceCents * item.quantity;
+    const total = getItemTotal(item);
     subtotalCents += total;
     const owners = bill.people.filter((person) =>
       item.ownerIds.includes(person.id),

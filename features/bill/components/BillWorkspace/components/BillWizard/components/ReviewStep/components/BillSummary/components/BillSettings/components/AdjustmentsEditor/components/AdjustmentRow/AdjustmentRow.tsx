@@ -1,10 +1,4 @@
-import {
-  ActionIcon,
-  Group,
-  NumberInput,
-  Select,
-  TextInput,
-} from "@mantine/core";
+import { ActionIcon, NumberInput, Select, TextInput } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import type { Adjustment } from "@/features/bill/domain/bill.schema";
 import { useBillStore } from "@/features/bill/store/bill.store";
@@ -12,6 +6,7 @@ import {
   centsToDollars,
   dollarsToCents,
 } from "@/features/bill/domain/money";
+import styles from "./AdjustmentRow.module.css";
 
 type Props = { adjustmentId: string };
 
@@ -25,9 +20,16 @@ export function AdjustmentRow({ adjustmentId }: Props) {
   const patch = (values: Partial<Adjustment>) =>
     saveAdjustment({ ...adjustment, ...values });
   return (
-    <Group gap="xs" wrap="nowrap">
+    <div className={styles.row}>
+      <TextInput
+        className={styles.label}
+        aria-label="Adjustment label"
+        placeholder={adjustment.kind === "fee" ? "Fee name" : "Discount name"}
+        value={adjustment.label}
+        onChange={(event) => patch({ label: event.currentTarget.value })}
+      />
       <Select
-        w={96}
+        className={styles.kind}
         value={adjustment.kind}
         data={[
           { value: "fee", label: "Fee" },
@@ -35,15 +37,9 @@ export function AdjustmentRow({ adjustmentId }: Props) {
         ]}
         onChange={(value) => patch({ kind: value as Adjustment["kind"] })}
       />
-      <TextInput
-        aria-label="Adjustment label"
-        value={adjustment.label}
-        onChange={(event) => patch({ label: event.currentTarget.value })}
-        style={{ flex: 1 }}
-      />
       <NumberInput
+        className={styles.amount}
         aria-label="Adjustment amount"
-        w={100}
         prefix="$"
         decimalScale={2}
         value={centsToDollars(adjustment.amountCents)}
@@ -57,6 +53,6 @@ export function AdjustmentRow({ adjustmentId }: Props) {
       >
         <IconTrash size={16} />
       </ActionIcon>
-    </Group>
+    </div>
   );
 }

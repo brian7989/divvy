@@ -18,7 +18,7 @@ export async function parseReceipt(
         schema: ParsedReceiptSchema,
       }),
       system:
-        "You extract receipts accurately. Use integer cents, never decimal dollars. Do not invent obscured values. Exclude subtotal, tax, tip, totals, payment, and change from line items. Put service charges and discounts in adjustments. Use ISO 4217 currency codes. If quantity is absent, use 1. If a summary value is absent, return null.",
+        "You extract receipts accurately. Use integer cents, never decimal dollars. Do not invent obscured values. Exclude subtotal, tax, tip, totals, payment, and change from line items. Put discounts tied to a specific item in that item's discountCents. Put order-level discounts and service charges in adjustments. Use 0 when an item has no discount. lineTotalCents must equal unitPriceCents times quantity minus discountCents. Use ISO 4217 currency codes. If quantity is absent, use 1. If a summary value is absent, return null.",
       messages: [
         {
           role: "user",

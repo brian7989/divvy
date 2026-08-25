@@ -17,6 +17,7 @@ const bill: Bill = {
       id: "item",
       name: "Shared",
       unitPriceCents: 1000,
+      discountCents: 0,
       quantity: 1,
       ownerIds: ["a", "b", "c"],
     },
@@ -54,5 +55,18 @@ describe("calculateBill", () => {
     expect(totals.shares.every(({ totalCents }) => totalCents === 0)).toBe(
       true,
     );
+  });
+  it("applies an item discount before splitting its owners", () => {
+    const totals = calculateBill({
+      ...bill,
+      taxCents: 0,
+      tipPercent: 0,
+      adjustments: [],
+      items: [{ ...bill.items[0], discountCents: 100 }],
+    });
+    expect(totals.subtotalCents).toBe(900);
+    expect(totals.shares.map(({ totalCents }) => totalCents)).toEqual([
+      300, 300, 300,
+    ]);
   });
 });

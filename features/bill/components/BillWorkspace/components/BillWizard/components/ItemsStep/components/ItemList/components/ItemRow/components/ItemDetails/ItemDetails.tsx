@@ -1,6 +1,7 @@
 import { Text, UnstyledButton } from "@mantine/core";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { formatMoney } from "@/features/bill/domain/money";
+import { getItemTotal } from "@/features/bill/domain/getItemTotal";
 
 type Props = { itemId: string };
 
@@ -28,6 +29,9 @@ export function ItemDetails({ itemId }: Props) {
       <Text c="dimmed" size="xs">
         {item.quantity > 1 ? `${item.quantity} × ` : ""}
         {formatMoney(item.unitPriceCents)}
+        {item.discountCents
+          ? ` − ${formatMoney(item.discountCents)} discount · ${formatMoney(getItemTotal(item))} total`
+          : ""}
       </Text>
     </UnstyledButton>
   );

@@ -3,8 +3,9 @@ import {
   calculateBill,
   type BillTotals,
 } from "../domain/calculateBill";
-import { allocateCents } from "../domain/money";
+import { allocateCents, formatMoney } from "../domain/money";
 import { getPersonEmoji } from "../domain/person-emojis";
+import { getItemTotal } from "../domain/getItemTotal";
 import type {
   BillShareData,
   BillShareLine,
@@ -15,8 +16,11 @@ type ExtraComponent = { label: string; amountCents: number };
 
 function getItemLabel(item: BillItem, ownerCount: number): string {
   const quantity = item.quantity > 1 ? `${item.quantity} × ` : "";
+  const discount = item.discountCents
+    ? ` · −${formatMoney(item.discountCents)}`
+    : "";
   const shared = ownerCount > 1 ? ` · 1/${ownerCount} share` : "";
-  return `${quantity}${item.name}${shared}`;
+  return `${quantity}${item.name}${discount}${shared}`;
 }
 
 function buildItemLines(bill: Bill): Map<string, BillShareLine[]> {
@@ -28,7 +32,7 @@ function buildItemLines(bill: Bill): Map<string, BillShareLine[]> {
       item.ownerIds.includes(person.id),
     );
     const portions = allocateCents(
-      item.unitPriceCents * item.quantity,
+      getItemTotal(item),
       owners.map(() => 1),
     );
     owners.forEach((owner, index) =>

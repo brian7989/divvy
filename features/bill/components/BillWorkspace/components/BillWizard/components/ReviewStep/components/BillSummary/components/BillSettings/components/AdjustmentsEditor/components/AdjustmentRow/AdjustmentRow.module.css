@@ -1,0 +1,22 @@
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 104px 112px 36px;
+  gap: 8px;
+  align-items: center;
+}
+
+.label,
+.kind,
+.amount {
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 36px;
+  }
+
+  .label {
+    grid-column: 1 / -1;
+  }
+}

@@ -1,12 +1,18 @@
 import { z } from "zod";
 
 /** A line item extracted from a receipt, represented in integer cents. */
-export const ReceiptItemSchema = z.object({
-  name: z.string().trim().min(1).max(120),
-  quantity: z.number().int().min(1).max(99),
-  unitPriceCents: z.number().int().nonnegative(),
-  lineTotalCents: z.number().int().nonnegative(),
-});
+export const ReceiptItemSchema = z
+  .object({
+    name: z.string().trim().min(1).max(120),
+    quantity: z.number().int().min(1).max(99),
+    unitPriceCents: z.number().int().nonnegative(),
+    discountCents: z.number().int().nonnegative(),
+    lineTotalCents: z.number().int().nonnegative(),
+  })
+  .refine(
+    (item) => item.discountCents <= item.unitPriceCents * item.quantity,
+    { message: "Discount cannot exceed the item total", path: ["discountCents"] },
+  );
 
 /** A non-item charge or discount found on a receipt. */
 export const ReceiptAdjustmentSchema = z.object({

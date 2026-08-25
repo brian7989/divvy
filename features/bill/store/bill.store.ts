@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { BillSchema, type Bill } from "@/features/bill/domain/bill.schema";
+import { getAdjustmentLabel } from "@/features/bill/domain/getAdjustmentLabel";
 import type { BillStore } from "./bill-store.types";
 import { createBillSlice } from "./slices/bill.slice";
 import { createBillUiSlice } from "./slices/bill-ui.slice";
@@ -26,11 +27,20 @@ export const useBillStore = create<BillStore>()(
         const result = BillSchema.safeParse(
           (persistedState as Partial<PersistedBillState> | undefined)?.bill,
         );
-        return result.success
+        const bill = result.success
+          ? {
+              ...result.data,
+              adjustments: result.data.adjustments.map((adjustment) => ({
+                ...adjustment,
+                label: getAdjustmentLabel(adjustment.label, adjustment.kind),
+              })),
+            }
+          : null;
+        return bill
           ? {
               ...currentState,
-              bill: result.data,
-              titleDraft: result.data.title,
+              bill,
+              titleDraft: bill.title,
             }
           : currentState;
       },

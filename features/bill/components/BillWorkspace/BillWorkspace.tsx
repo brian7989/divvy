@@ -8,6 +8,7 @@ import { AssignmentModal } from "./components/AssignmentModal/AssignmentModal";
 import { ItemEditorModal } from "./components/ItemEditorModal/ItemEditorModal";
 import { PeopleModal } from "./components/PeopleModal/PeopleModal";
 import { OrientationGuard } from "./components/OrientationGuard/OrientationGuard";
+import { PwaInstallPrompt } from "./components/PwaInstallPrompt/PwaInstallPrompt";
 import { WorkspaceHeader } from "./components/WorkspaceHeader/WorkspaceHeader";
 import styles from "./BillWorkspace.module.css";
 
@@ -32,6 +33,7 @@ export function BillWorkspace() {
       <ItemEditorModal />
       <AssignmentModal />
       <OrientationGuard />
+      <PwaInstallPrompt />
     </main>
   );
 }

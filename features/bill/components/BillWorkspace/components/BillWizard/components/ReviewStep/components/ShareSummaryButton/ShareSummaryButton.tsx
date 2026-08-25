@@ -3,13 +3,14 @@ import { notifications } from "@mantine/notifications";
 import { IconShare } from "@tabler/icons-react";
 import { useState } from "react";
 import { useBillTotals } from "@/features/bill/hooks/useBillTotals";
-import { useBillStore } from "@/features/bill/store/bill.store";
 import { shareBillImage } from "@/features/bill/share/shareBillImage";
+import { useBillStore } from "@/features/bill/store/bill.store";
 
 export function ShareSummaryButton() {
   const [creating, setCreating] = useState(false);
   const bill = useBillStore((state) => state.bill);
   const totals = useBillTotals();
+
   const share = async () => {
     setCreating(true);
     try {
@@ -29,9 +30,12 @@ export function ShareSummaryButton() {
       setCreating(false);
     }
   };
+
   return (
     <Button
-      leftSection={<IconShare size={17} />}
+      size="lg"
+      radius="xl"
+      leftSection={<IconShare size={18} />}
       disabled={creating || totals.unassignedCount > 0 || !bill.items.length}
       loading={creating}
       onClick={share}

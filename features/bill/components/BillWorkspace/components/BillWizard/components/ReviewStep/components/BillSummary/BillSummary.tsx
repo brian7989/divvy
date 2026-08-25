@@ -4,7 +4,6 @@ import { BillSettings } from "./components/BillSettings/BillSettings";
 import { BillTotal } from "./components/BillTotal/BillTotal";
 import { PersonShareList } from "./components/PersonShareList/PersonShareList";
 import { ServiceFeeWarning } from "./components/ServiceFeeWarning/ServiceFeeWarning";
-import { ShareSummaryButton } from "./components/ShareSummaryButton/ShareSummaryButton";
 
 export function BillSummary() {
   return (
@@ -19,7 +18,6 @@ export function BillSummary() {
         <BillTotal />
         <ServiceFeeWarning />
         <PersonShareList />
-        <ShareSummaryButton />
       </Stack>
     </Card>
   );

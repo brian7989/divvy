@@ -1,7 +1,8 @@
-import { Button, Text, Title } from "@mantine/core";
+import { Button, Group, Text, Title } from "@mantine/core";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { BillSummary } from "./components/BillSummary/BillSummary";
+import { ShareSummaryButton } from "./components/ShareSummaryButton/ShareSummaryButton";
 import { WizardStepLayout } from "../WizardStepLayout/WizardStepLayout";
 import styles from "@/features/bill/components/BillWorkspace/BillWorkspace.module.css";
 
@@ -9,14 +10,17 @@ export function ReviewStep() {
   const previousStep = useBillStore((state) => state.previousStep);
 
   const actions = (
-    <Button
-      variant="subtle"
-      color="party"
-      leftSection={<IconArrowLeft size={18} />}
-      onClick={previousStep}
-    >
-      Back to items
-    </Button>
+    <Group className={styles.stepActions} justify="space-between">
+      <Button
+        variant="subtle"
+        color="party"
+        leftSection={<IconArrowLeft size={18} />}
+        onClick={previousStep}
+      >
+        Back to items
+      </Button>
+      <ShareSummaryButton />
+    </Group>
   );
 
   return (

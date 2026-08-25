@@ -8,7 +8,7 @@ Divvy makes it easy to split shared expenses by what each person owes. No accoun
 
 ## What it does
 
-- Adds everyone at the table
+- Adds everyone involved
 - Tracks items, quantities, and prices
 - Scans receipt photos into editable items
 - Splits shared items between the right people

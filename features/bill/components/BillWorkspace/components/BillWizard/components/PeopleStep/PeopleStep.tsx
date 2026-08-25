@@ -41,7 +41,7 @@ export function PeopleStep() {
     <WizardStepLayout actions={actions}>
       <div className={styles.stepIcon}>1</div>
       <Text className={styles.eyebrow}>Step 1</Text>
-      <Title className={styles.stepTitle}>Who’s at the table?</Title>
+      <Title className={styles.stepTitle}>Who’s splitting this?</Title>
       <Text className={styles.stepIntro}>
         Add a bill title and everyone splitting it.
       </Text>

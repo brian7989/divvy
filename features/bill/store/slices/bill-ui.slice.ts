@@ -1,7 +1,10 @@
 import type { StateCreator } from "zustand";
 import { DEFAULT_BILL_TITLE } from "@/features/bill/domain/bill.factory";
 import type { BillStore, BillUiSlice } from "../bill-store.types";
-import { getAdjacentStep } from "../wizard/bill-wizard";
+import {
+  canContinueFromPeople,
+  getAdjacentStep,
+} from "../wizard/bill-wizard";
 
 /**
  * Creates transient modal state. Item IDs use undefined=closed, null=new,
@@ -18,7 +21,14 @@ export const createBillUiSlice: StateCreator<BillStore, [], [], BillUiSlice> = (
   goToStep: (wizardStep) => set({ wizardStep }),
   setTitleDraft: (titleDraft) => set({ titleDraft }),
   nextStep: () =>
-    set((state) => ({ wizardStep: getAdjacentStep(state.wizardStep, 1) })),
+    set((state) => {
+      if (
+        state.wizardStep === "people" &&
+        !canContinueFromPeople(state.bill.people.length, state.titleDraft)
+      )
+        return state;
+      return { wizardStep: getAdjacentStep(state.wizardStep, 1) };
+    }),
   previousStep: () =>
     set((state) => ({ wizardStep: getAdjacentStep(state.wizardStep, -1) })),
   openPeople: () => set({ peopleOpen: true }),

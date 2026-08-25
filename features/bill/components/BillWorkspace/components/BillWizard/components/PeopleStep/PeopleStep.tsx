@@ -1,6 +1,7 @@
 import { Button, Text, Title } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons-react";
 import { useBillStore } from "@/features/bill/store/bill.store";
+import { canContinueFromPeople } from "@/features/bill/store/wizard/bill-wizard";
 import { BillTitle } from "./components/BillTitle/BillTitle";
 import { PeopleBar } from "./components/PeopleBar/PeopleBar";
 import styles from "@/features/bill/components/BillWorkspace/BillWorkspace.module.css";
@@ -11,7 +12,7 @@ export function PeopleStep() {
   const updateTitle = useBillStore((state) => state.updateTitle);
   const nextStep = useBillStore((state) => state.nextStep);
   const hasTitle = Boolean(titleDraft.trim());
-  const canContinue = peopleCount > 0 && hasTitle;
+  const canContinue = canContinueFromPeople(peopleCount, titleDraft);
 
   return (
     <div className={styles.stepContent}>
@@ -38,8 +39,10 @@ export function PeopleStep() {
         }}
         disabled={!canContinue}
       >
-        {!peopleCount
-          ? "Add a person to continue"
+        {peopleCount === 0
+          ? "Add two people to continue"
+          : peopleCount === 1
+            ? "Add one more person"
           : hasTitle
             ? "Continue"
             : "Name the bill to continue"}

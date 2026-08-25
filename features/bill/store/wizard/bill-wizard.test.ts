@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { getAdjacentStep } from "./bill-wizard";
+import { canContinueFromPeople, getAdjacentStep } from "./bill-wizard";
+
+describe("canContinueFromPeople", () => {
+  it("requires a title and at least two people", () => {
+    expect(canContinueFromPeople(0, "Trip")).toBe(false);
+    expect(canContinueFromPeople(1, "Trip")).toBe(false);
+    expect(canContinueFromPeople(2, "   ")).toBe(false);
+    expect(canContinueFromPeople(2, "Trip")).toBe(true);
+  });
+});
 
 describe("getAdjacentStep", () => {
   it("moves forward and backward", () => {

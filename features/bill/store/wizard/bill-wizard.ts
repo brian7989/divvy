@@ -7,6 +7,14 @@ export const BILL_WIZARD_STEPS = [
 
 export type BillWizardStep = (typeof BILL_WIZARD_STEPS)[number];
 
+/** Checks the minimum valid state required to leave the people step. */
+export function canContinueFromPeople(
+  peopleCount: number,
+  titleDraft: string,
+) {
+  return peopleCount >= 2 && Boolean(titleDraft.trim());
+}
+
 /** Returns the adjacent step while keeping navigation inside the wizard. */
 export function getAdjacentStep(
   currentStep: BillWizardStep,

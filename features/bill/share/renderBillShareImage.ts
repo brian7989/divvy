@@ -26,7 +26,7 @@ function getSectionHeight(section: PersonShareSection): number {
 
 function getImageHeight(data: BillShareData): number {
   return (
-    250 +
+    180 +
     data.people.reduce(
       (height, person) => height + getSectionHeight(person) + CARD_GAP,
       0,
@@ -82,33 +82,21 @@ function fitText(
   return `${shortened}…`;
 }
 
-function drawBrand(context: CanvasRenderingContext2D) {
-  fillRoundedRect(context, PAGE_PADDING, 58, 58, 58, 17, COLORS.purple);
-  context.fillStyle = "white";
-  context.font = "800 30px sans-serif";
-  context.textAlign = "center";
-  context.fillText("÷", PAGE_PADDING + 29, 98);
-  context.fillStyle = COLORS.ink;
-  context.font = "800 34px sans-serif";
-  context.textAlign = "left";
-  context.fillText("divvy", PAGE_PADDING + 76, 98);
-}
-
 function drawHeader(context: CanvasRenderingContext2D, data: BillShareData) {
-  drawBrand(context);
   context.fillStyle = COLORS.ink;
   context.font = "800 54px sans-serif";
-  context.fillText(fitText(context, data.title, 680), PAGE_PADDING, 178);
+  context.textAlign = "left";
+  context.fillText(fitText(context, data.title, 680), PAGE_PADDING, 98);
   context.fillStyle = COLORS.muted;
   context.font = "500 24px sans-serif";
-  context.fillText("Itemized split", PAGE_PADDING, 218);
+  context.fillText("Itemized split", PAGE_PADDING, 138);
   context.fillStyle = COLORS.purple;
   context.font = "800 42px sans-serif";
   context.textAlign = "right";
   context.fillText(
     formatMoney(data.totalCents),
     IMAGE_WIDTH - PAGE_PADDING,
-    190,
+    110,
   );
   context.textAlign = "left";
 }
@@ -247,7 +235,7 @@ export async function renderBillShareImage(data: BillShareData): Promise<File> {
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   drawHeader(context, data);
-  let y = 250;
+  let y = 180;
   data.people.forEach((person) => {
     y = drawPersonSection(context, person, y);
   });
@@ -256,4 +244,3 @@ export async function renderBillShareImage(data: BillShareData): Promise<File> {
     type: "image/png",
   });
 }
-

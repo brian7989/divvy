@@ -1,5 +1,7 @@
 import type { Bill } from "./bill.schema";
 
+export const DEFAULT_BILL_TITLE = "New bill";
+
 /** Creates a collision-resistant identifier for persisted bill entities. */
 export const createId = () => crypto.randomUUID();
 
@@ -8,7 +10,7 @@ export function createBill(): Bill {
   return {
     id: createId(),
     version: 2,
-    title: "New bill",
+    title: DEFAULT_BILL_TITLE,
     people: [],
     items: [],
     taxCents: 0,

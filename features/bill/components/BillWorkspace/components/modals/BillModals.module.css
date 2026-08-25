@@ -22,6 +22,12 @@
   min-height: 48px;
 }
 
+.modalTitle {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
 .closeButton {
   width: 44px;
   height: 44px;
@@ -29,6 +35,18 @@
 
 .assigneeButton {
   min-height: 48px;
+}
+
+.assignmentFooter {
+  gap: 12px;
+}
+
+.assignmentSummary {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f2efff;
+  color: #4f3a9f;
+  font-weight: 700;
 }
 
 .personRow {
@@ -91,8 +109,8 @@
   }
 
   .sheetFooter {
-    margin-bottom: -16px;
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    margin-bottom: 0;
+    padding-bottom: max(24px, calc(env(safe-area-inset-bottom) + 16px));
   }
 
   .numberInput :global(.mantine-Input-input),

@@ -19,7 +19,11 @@ export const createBillSlice: StateCreator<BillStore, [], [], BillSlice> = (
   bill: createBill(),
   reset: () => set({ bill: createBill() }),
   updateTitle: (title) =>
-    set((state) => ({ bill: touch({ ...state.bill, title }) })),
+    set((state) => {
+      return title.trim()
+        ? { bill: touch({ ...state.bill, title }) }
+        : state;
+    }),
   addPerson: (person) =>
     set((state) => ({
       bill: touch({ ...state.bill, people: [...state.bill.people, person] }),

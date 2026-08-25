@@ -82,6 +82,7 @@ export function ItemEditorModal() {
         inner: styles.modalInner,
         content: styles.modalContent,
         header: styles.modalHeader,
+        title: styles.modalTitle,
         body: styles.modalBody,
         close: styles.closeButton,
       }}

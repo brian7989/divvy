@@ -28,7 +28,7 @@ export const AdjustmentSchema = z.object({
 export const BillSchema = z.object({
   id: z.string().min(1),
   version: z.literal(2),
-  title: z.string(),
+  title: z.string().trim().min(1),
   people: z.array(PersonSchema),
   items: z.array(BillItemSchema),
   taxCents: z.number().int().nonnegative(),

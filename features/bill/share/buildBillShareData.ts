@@ -5,7 +5,10 @@ import {
 } from "../domain/calculateBill";
 import { allocateCents, formatMoney } from "../domain/money";
 import { getPersonEmoji } from "../domain/person-emojis";
-import { allocateBillItems } from "../domain/allocateBillItems";
+import {
+  allocateBillItems,
+  getResponsibilityWeights,
+} from "../domain/allocateBillItems";
 import type {
   BillShareData,
   BillShareLine,
@@ -48,17 +51,41 @@ function buildItemLines(bill: Bill): Map<string, BillShareLine[]> {
   return lines;
 }
 
-function getExtraComponents(bill: Bill, tipCents: number): ExtraComponent[] {
+function getAdjustmentComponents(
+  bill: Bill,
+  effectiveAdjustmentsCents: number,
+): ExtraComponent[] {
+  const components = bill.adjustments.map((adjustment) => ({
+    label: adjustment.label,
+    amountCents:
+      adjustment.kind === "fee"
+        ? adjustment.amountCents
+        : -adjustment.amountCents,
+  }));
+  const requestedAdjustmentsCents = components.reduce(
+    (sum, component) => sum + component.amountCents,
+    0,
+  );
+  const discountLimitCents =
+    effectiveAdjustmentsCents - requestedAdjustmentsCents;
+  return discountLimitCents
+    ? [
+        ...components,
+        { label: "Discount limit", amountCents: discountLimitCents },
+      ]
+    : components;
+}
+
+function getExtraComponents(
+  bill: Bill,
+  totals: BillTotals,
+): ExtraComponent[] {
   return [
     ...(bill.taxCents ? [{ label: "Tax", amountCents: bill.taxCents }] : []),
-    ...(tipCents ? [{ label: "Tip", amountCents: tipCents }] : []),
-    ...bill.adjustments.map((adjustment) => ({
-      label: adjustment.label,
-      amountCents:
-        adjustment.kind === "fee"
-          ? adjustment.amountCents
-          : -adjustment.amountCents,
-    })),
+    ...(totals.tipCents
+      ? [{ label: "Tip", amountCents: totals.tipCents }]
+      : []),
+    ...getAdjustmentComponents(bill, totals.adjustmentsCents),
   ];
 }
 
@@ -95,10 +122,14 @@ function buildPersonSections(
   totals: BillTotals,
 ): PersonShareSection[] {
   const itemLines = buildItemLines(bill);
-  const exactShares = allocateBillItems(bill).exactShares;
+  const responsibilityWeights = getResponsibilityWeights(
+    allocateBillItems(bill),
+  );
   const extras = buildExtraLines(
-    getExtraComponents(bill, totals.tipCents),
-    totals.shares.map((share) => exactShares.get(share.person.id) ?? 0),
+    getExtraComponents(bill, totals),
+    totals.shares.map(
+      (share) => responsibilityWeights.get(share.person.id) ?? 0,
+    ),
     totals.shares.map((share) => share.extrasCents),
     totals.roundingCents ? "Equal-split rounding" : "Rounding",
   );

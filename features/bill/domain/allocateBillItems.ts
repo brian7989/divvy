@@ -10,9 +10,23 @@ export type BillItemAllocations = {
   allocations: ItemAllocation[];
   exactShares: Map<string, number>;
   itemShares: Map<string, number>;
+  participationCounts: Map<string, number>;
   subtotalCents: number;
   unassignedCount: number;
 };
+
+/** Uses monetary responsibility, falling back to participation for zero items. */
+export function getResponsibilityWeights(
+  allocations: BillItemAllocations,
+): Map<string, number> {
+  const exactWeightTotal = [...allocations.exactShares.values()].reduce(
+    (sum, share) => sum + share,
+    0,
+  );
+  return exactWeightTotal
+    ? allocations.exactShares
+    : allocations.participationCounts;
+}
 
 function getNextRemainderOwner(
   ownerIds: string[],
@@ -32,6 +46,7 @@ function getNextRemainderOwner(
 export function allocateBillItems(bill: Bill): BillItemAllocations {
   const exactShares = new Map(bill.people.map(({ id }) => [id, 0]));
   const itemShares = new Map(bill.people.map(({ id }) => [id, 0]));
+  const participationCounts = new Map(bill.people.map(({ id }) => [id, 0]));
   const allocations: ItemAllocation[] = [];
   let subtotalCents = 0;
   let unassignedCount = 0;
@@ -53,6 +68,10 @@ export function allocateBillItems(bill: Bill): BillItemAllocations {
     const exactPortion = total / ownerIds.length;
     const basePortion = Math.floor(exactPortion);
     ownerIds.forEach((personId) => {
+      participationCounts.set(
+        personId,
+        (participationCounts.get(personId) ?? 0) + 1,
+      );
       exactShares.set(
         personId,
         (exactShares.get(personId) ?? 0) + exactPortion,
@@ -81,6 +100,7 @@ export function allocateBillItems(bill: Bill): BillItemAllocations {
     allocations,
     exactShares,
     itemShares,
+    participationCounts,
     subtotalCents,
     unassignedCount,
   };

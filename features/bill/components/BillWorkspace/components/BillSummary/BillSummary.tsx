@@ -14,10 +14,14 @@ import {
 import { notifications } from "@mantine/notifications";
 import { IconAlertCircle, IconShare } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
-import { calculateBill } from "../../model/calculateBill";
-import { useBillStore } from "../../model/bill.store";
-import { centsToDollars, dollarsToCents, formatMoney } from "../../model/money";
-import { AdjustmentsEditor } from "./AdjustmentsEditor";
+import { calculateBill } from "../../../../model/calculateBill";
+import { useBillStore } from "../../../../model/bill.store";
+import {
+  centsToDollars,
+  dollarsToCents,
+  formatMoney,
+} from "../../../../model/money";
+import { AdjustmentsEditor } from "./components/AdjustmentsEditor";
 
 export function BillSummary() {
   const bill = useBillStore((state) => state.bill);

@@ -9,9 +9,9 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconTrash } from "@tabler/icons-react";
-import { createId, PERSON_COLORS } from "../../model/bill.factory";
-import { useBillStore } from "../../model/bill.store";
-import { PersonAvatar } from "../shared/PersonAvatar";
+import { createId, PERSON_COLORS } from "../../../../model/bill.factory";
+import { useBillStore } from "../../../../model/bill.store";
+import { PersonAvatar } from "../../../../shared/components/PersonAvatar";
 
 export function PeopleModal({
   opened,

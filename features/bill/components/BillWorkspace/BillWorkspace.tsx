@@ -16,12 +16,12 @@ import { useState } from "react";
 import { useBillPersistence } from "../../hooks/useBillPersistence";
 import { usePwa } from "../../hooks/usePwa";
 import { useBillStore } from "../../model/bill.store";
-import { AssignmentModal } from "../assignment/AssignmentModal";
-import { ItemEditorModal } from "../items/ItemEditorModal";
-import { ItemList } from "../items/ItemList";
-import { PeopleBar } from "../people/PeopleBar";
-import { PeopleModal } from "../people/PeopleModal";
-import { BillSummary } from "../summary/BillSummary";
+import { BillSummary } from "./components/BillSummary/BillSummary";
+import { ItemList } from "./components/ItemList/ItemList";
+import { PeopleBar } from "./components/PeopleBar/PeopleBar";
+import { AssignmentModal } from "./components/modals/AssignmentModal";
+import { ItemEditorModal } from "./components/modals/ItemEditorModal";
+import { PeopleModal } from "./components/modals/PeopleModal";
 import styles from "./BillWorkspace.module.css";
 
 export function BillWorkspace() {

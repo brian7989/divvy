@@ -8,10 +8,10 @@ import {
   TextInput,
 } from "@mantine/core";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
-import { createId } from "../../model/bill.factory";
-import type { Adjustment } from "../../model/bill.schema";
-import { useBillStore } from "../../model/bill.store";
-import { centsToDollars, dollarsToCents } from "../../model/money";
+import { createId } from "../../../../../model/bill.factory";
+import type { Adjustment } from "../../../../../model/bill.schema";
+import { useBillStore } from "../../../../../model/bill.store";
+import { centsToDollars, dollarsToCents } from "../../../../../model/money";
 
 export function AdjustmentsEditor() {
   const adjustments = useBillStore((state) => state.bill.adjustments);

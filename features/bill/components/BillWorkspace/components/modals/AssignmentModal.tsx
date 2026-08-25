@@ -7,9 +7,9 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import { useBillStore } from "../../model/bill.store";
-import { formatMoney } from "../../model/money";
-import { PersonAvatar } from "../shared/PersonAvatar";
+import { useBillStore } from "../../../../model/bill.store";
+import { formatMoney } from "../../../../model/money";
+import { PersonAvatar } from "../../../../shared/components/PersonAvatar";
 
 export function AssignmentModal({
   itemId,

@@ -9,9 +9,9 @@ import {
 import { useForm } from "@mantine/form";
 import { modals } from "@mantine/modals";
 import { useEffect } from "react";
-import { createId } from "../../model/bill.factory";
-import { useBillStore } from "../../model/bill.store";
-import { centsToDollars, dollarsToCents } from "../../model/money";
+import { createId } from "../../../../model/bill.factory";
+import { useBillStore } from "../../../../model/bill.store";
+import { centsToDollars, dollarsToCents } from "../../../../model/money";
 
 type FormValues = { name: string; price: number; quantity: number };
 

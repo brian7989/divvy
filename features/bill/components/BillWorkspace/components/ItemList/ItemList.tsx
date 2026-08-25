@@ -8,9 +8,9 @@ import {
   Text,
 } from "@mantine/core";
 import { IconDots, IconEdit, IconPlus, IconUsers } from "@tabler/icons-react";
-import type { BillItem, Person } from "../../model/bill.schema";
-import { formatMoney } from "../../model/money";
-import { PersonAvatar } from "../shared/PersonAvatar";
+import type { BillItem, Person } from "../../../../model/bill.schema";
+import { formatMoney } from "../../../../model/money";
+import { PersonAvatar } from "../../../../shared/components/PersonAvatar";
 import styles from "./ItemList.module.css";
 
 type Props = {

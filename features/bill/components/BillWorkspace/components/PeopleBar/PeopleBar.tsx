@@ -1,7 +1,7 @@
 import { Button, Group } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
-import type { Person } from "../../model/bill.schema";
-import { PersonAvatar } from "../shared/PersonAvatar";
+import type { Person } from "../../../../model/bill.schema";
+import { PersonAvatar } from "../../../../shared/components/PersonAvatar";
 
 export function PeopleBar({
   people,

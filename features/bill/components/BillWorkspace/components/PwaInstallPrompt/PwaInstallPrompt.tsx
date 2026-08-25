@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Text } from "@mantine/core";
+import { Button, Modal, Text } from "@mantine/core";
 import { IconDownload } from "@tabler/icons-react";
 import styles from "../../BillWorkspace.module.css";
 import { AppleInstallInstructions } from "./components/AppleInstallInstructions/AppleInstallInstructions";
@@ -36,22 +36,18 @@ export function PwaInstallPrompt() {
             </Text>
           )}
         </div>
-        <div className={styles.sheetFooter}>
-          <Group grow>
-            <Button size="md" variant="default" onClick={dismiss}>
-              Not now
+        {canInstall && (
+          <div className={styles.sheetFooter}>
+            <Button
+              fullWidth
+              size="md"
+              leftSection={<IconDownload size={18} />}
+              onClick={install}
+            >
+              Install
             </Button>
-            {canInstall && (
-              <Button
-                size="md"
-                leftSection={<IconDownload size={18} />}
-                onClick={install}
-              >
-                Install
-              </Button>
-            )}
-          </Group>
-        </div>
+          </div>
+        )}
       </div>
     </Modal>
   );

@@ -196,7 +196,7 @@
 
 .methodGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   width: min(100%, 680px);
   margin: 38px 0 26px;
@@ -217,15 +217,16 @@
   transition: transform 140ms ease, box-shadow 140ms ease;
 }
 
-button.methodCard:hover {
+button.methodCard:not(:disabled):hover {
   transform: translateY(-3px) rotate(-0.5deg);
   box-shadow: 0 10px 0 #d5cbea;
 }
 
 .methodCard:disabled {
-  cursor: wait;
   opacity: 0.78;
 }
+
+.methodCard[data-loading] { cursor: wait; }
 
 .methodIcon {
   display: grid;
@@ -244,9 +245,32 @@ button.methodCard:hover {
   letter-spacing: -0.5px;
 }
 
-.methodCard > span:last-of-type {
+.methodDescription {
   margin-top: 4px;
   font-size: 14px;
+}
+
+.voiceMethodCard { cursor: default; }
+
+.voiceMethodCopy {
+  display: flex;
+  flex-direction: column;
+}
+
+.voiceMethodCopy strong { margin-top: 28px; }
+
+.comingSoonBadge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #f2efff;
+  color: #542bda;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 
 .methodArrow {
@@ -361,8 +385,20 @@ button.methodCard:hover {
   .methodCard { min-height: 150px; padding: 14px; border-radius: 18px; }
   .methodIcon { width: 38px; height: 38px; }
   .methodCard strong { margin-top: 18px; font-size: 16px; }
-  .methodCard > span:last-of-type { font-size: 12px; line-height: 1.25; }
+  .methodDescription { font-size: 12px; line-height: 1.25; }
   .methodArrow { right: 13px; bottom: 15px; }
+  .voiceMethodCard {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 12px;
+    min-height: 88px;
+    text-align: left;
+  }
+  .voiceMethodCard .methodIcon { margin-bottom: 0; }
+  .voiceMethodCopy strong { margin-top: 0; }
+  .comingSoonBadge { top: 10px; right: 12px; font-size: 8px; }
   .itemWorkspace, .reviewCard { margin: 22px 0 18px; }
   .stepFooter > .primaryAction { width: 100%; }
   .stepActions { align-items: stretch; flex-direction: column-reverse; }

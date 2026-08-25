@@ -6,6 +6,7 @@ import {
 } from "@tabler/icons-react";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { ReceiptUploadButton } from "./components/ReceiptUploadButton/ReceiptUploadButton";
+import { VoiceMethodCard } from "./components/VoiceMethodCard/VoiceMethodCard";
 import { WizardStepLayout } from "../WizardStepLayout/WizardStepLayout";
 import styles from "@/features/bill/components/BillWorkspace/BillWorkspace.module.css";
 
@@ -41,10 +42,11 @@ export function EntryMethodStep() {
             <IconPencil size={24} />
           </span>
           <strong>Add manually</strong>
-          <span>Enter each item</span>
+          <span className={styles.methodDescription}>Enter each item</span>
           <IconArrowRight className={styles.methodArrow} size={20} />
         </UnstyledButton>
         <ReceiptUploadButton />
+        <VoiceMethodCard />
       </div>
     </WizardStepLayout>
   );

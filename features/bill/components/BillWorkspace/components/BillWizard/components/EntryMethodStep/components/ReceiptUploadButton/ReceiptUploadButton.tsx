@@ -83,6 +83,7 @@ export function ReceiptUploadButton() {
         className={styles.methodCard}
         onClick={selectReceipt}
         disabled={parsing}
+        data-loading={parsing || undefined}
       >
         <span className={styles.methodIcon}>
           {parsing ? (
@@ -92,7 +93,7 @@ export function ReceiptUploadButton() {
           )}
         </span>
         <strong>{parsing ? "Reading receipt" : "Upload receipt"}</strong>
-        <span>
+        <span className={styles.methodDescription}>
           {parsing ? "Finding your items…" : "Scan items automatically"}
         </span>
       </UnstyledButton>

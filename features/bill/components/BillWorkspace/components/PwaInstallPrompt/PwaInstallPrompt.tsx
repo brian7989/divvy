@@ -1,6 +1,7 @@
-import { Button, Group, Modal, Stack, Text } from "@mantine/core";
-import { IconDownload, IconShare3 } from "@tabler/icons-react";
+import { Button, Group, Modal, Text } from "@mantine/core";
+import { IconDownload } from "@tabler/icons-react";
 import styles from "../../BillWorkspace.module.css";
+import { AppleInstallInstructions } from "./components/AppleInstallInstructions/AppleInstallInstructions";
 import { usePwaInstallPrompt } from "./hooks/usePwaInstallPrompt";
 
 export function PwaInstallPrompt() {
@@ -25,27 +26,15 @@ export function PwaInstallPrompt() {
     >
       <div className={styles.sheetLayout}>
         <div className={styles.sheetBody}>
-          <Stack gap="sm">
-            {appleMobile && appleSafari ? (
-              <>
-                <Group gap="xs" wrap="nowrap">
-                  <IconShare3 size={22} />
-                  <Text>Tap Share in Safari.</Text>
-                </Group>
-                <Text>Then tap Add to Home Screen.</Text>
-              </>
-            ) : appleMobile ? (
-              <Text>
-                Open this page in Safari, then tap Share and Add to Home Screen.
-              </Text>
-            ) : (
-              <Text>
-                {canInstall
-                  ? "Install Divvy for quick access from your home screen."
-                  : "Open your browser menu and tap Install app or Add to Home screen."}
-              </Text>
-            )}
-          </Stack>
+          {appleMobile ? (
+            <AppleInstallInstructions safari={appleSafari} />
+          ) : (
+            <Text>
+              {canInstall
+                ? "Install Divvy for quick access from your home screen."
+                : "Open your browser menu and tap Install app or Add to Home screen."}
+            </Text>
+          )}
         </div>
         <div className={styles.sheetFooter}>
           <Group grow>

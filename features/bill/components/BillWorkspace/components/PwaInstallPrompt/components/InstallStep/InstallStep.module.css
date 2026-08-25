@@ -1,0 +1,25 @@
+.step {
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+
+.icon {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.number {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #181622;
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+}

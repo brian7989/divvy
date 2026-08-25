@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const PROMPTED_STORAGE_KEY = "divvy-pwa-install-prompt-v1";
+const PROMPTED_STORAGE_KEY = "divvy-pwa-install-prompt-v2";
 
 type InstallChoice = { outcome: "accepted" | "dismissed" };
 

@@ -12,6 +12,10 @@ export function BillTitle() {
     <TextInput
       className={styles.title}
       variant="unstyled"
+      name="bill-title"
+      autoComplete="off"
+      autoCapitalize="words"
+      spellCheck
       value={titleDraft}
       onChange={(event) => setTitleDraft(event.currentTarget.value)}
       onBlur={() => {

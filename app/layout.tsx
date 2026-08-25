@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   title: "Divvy — Split the bill, not the vibe",
   description: "A fast, friendly way to split restaurant bills fairly.",
   manifest: "/manifest.webmanifest",
-  themeColor: "#fbfaf6",
   appleWebApp: { capable: true, title: "Divvy", statusBarStyle: "default" },
   icons: {
     icon: "/icon.svg",
@@ -27,6 +26,8 @@ export const metadata: Metadata = {
     apple: "/icon.svg",
   },
 };
+
+export const viewport: Viewport = { themeColor: "#fbfaf6" };
 
 export default function RootLayout({
   children,

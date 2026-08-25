@@ -1,6 +1,6 @@
 # Divvy
 
-A device-local PWA for splitting restaurant bills by item ownership.
+A device-local PWA built with the official Next.js App Router for splitting restaurant bills by item ownership.
 
 ## Commands
 
@@ -18,3 +18,5 @@ npm run check
 - `features/bill/repositories/` is the IndexedDB persistence boundary.
 
 Imports flow from routes to features, then from components to hooks/model/repositories. Monetary values are stored as integer cents and allocated deterministically.
+
+`npm run build` produces the standard Next.js application. `npm run build:cloudflare` adapts that build with OpenNext for the existing Cloudflare deployment target.

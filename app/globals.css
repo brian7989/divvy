@@ -24,6 +24,14 @@ input {
   font: inherit;
 }
 
+@media (max-width: 600px) {
+  input:not([type="file"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

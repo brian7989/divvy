@@ -50,6 +50,7 @@ export default function Home() {
   const [showAddItem, setShowAddItem] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     try {
@@ -140,6 +141,16 @@ export default function Home() {
     }));
   }
 
+  function deleteSelectedItem() {
+    if (!selectedItemId) return;
+    setBill((current) => ({
+      ...current,
+      items: current.items.filter((item) => item.id !== selectedItemId),
+    }));
+    setSelectedItemId(null);
+    setConfirmDelete(false);
+  }
+
   function resetBill() {
     setBill({ title: "New bill", people: [{ id: uid(), name: "You", color: COLORS[0] }], items: [], tax: 0, tipPercent: 20, adjustments: [] });
   }
@@ -180,7 +191,7 @@ export default function Home() {
 
           <div className="items-list">
             {bill.items.map((item) => (
-              <button className={`item-card ${item.ownerIds.length ? "" : "unassigned"}`} key={item.id} onClick={() => setSelectedItemId(item.id)}>
+              <button className={`item-card ${item.ownerIds.length ? "" : "unassigned"}`} key={item.id} onClick={() => { setSelectedItemId(item.id); setConfirmDelete(false); }}>
                 <div className="item-main">
                   <strong>{item.name}</strong>
                   <span>{item.quantity > 1 ? `${item.quantity} × ` : ""}{money(item.price)}</span>
@@ -244,6 +255,10 @@ export default function Home() {
             })}
           </div>
           <div className="split-preview">{selectedItem.ownerIds.length ? `${money(selectedItem.price * selectedItem.quantity / selectedItem.ownerIds.length)} each` : "Choose at least one person"}</div>
+          {confirmDelete ? <div className="delete-confirm" role="alert">
+            <p>Delete <strong>{selectedItem.name}</strong>? This can’t be undone.</p>
+            <div><button className="cancel-delete" onClick={() => setConfirmDelete(false)}>Keep item</button><button className="confirm-delete" onClick={deleteSelectedItem}>Delete</button></div>
+          </div> : <button className="delete-item-button" onClick={() => setConfirmDelete(true)}>Delete item</button>}
           <button className="primary-button" onClick={() => setSelectedItemId(null)} disabled={!selectedItem.ownerIds.length}>Done</button>
         </section>
       </div>}

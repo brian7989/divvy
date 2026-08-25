@@ -28,6 +28,48 @@
   transform: rotate(-5deg);
 }
 
+.orientationGuard {
+  display: none;
+}
+
+@media (display-mode: standalone) and (orientation: landscape) {
+  .orientationGuard {
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 8px;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background: var(--app-background);
+    color: #181622;
+    text-align: center;
+  }
+
+  .orientationGuard strong {
+    font-size: 24px;
+  }
+
+  .orientationGuard > span:last-child {
+    color: #6f697e;
+    font-size: 15px;
+  }
+
+  .orientationIcon {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 6px;
+    border-radius: 20px;
+    background: #754cff;
+    color: white;
+    box-shadow: 0 8px 0 rgb(117 76 255 / 14%);
+  }
+}
+
 .workspace {
   width: min(100%, 880px);
   margin: 0 auto;

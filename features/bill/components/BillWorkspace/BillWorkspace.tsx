@@ -7,6 +7,7 @@ import { BillWizard } from "./components/BillWizard/BillWizard";
 import { AssignmentModal } from "./components/modals/AssignmentModal/AssignmentModal";
 import { ItemEditorModal } from "./components/modals/ItemEditorModal/ItemEditorModal";
 import { PeopleModal } from "./components/modals/PeopleModal/PeopleModal";
+import { OrientationGuard } from "./components/OrientationGuard/OrientationGuard";
 import { WorkspaceHeader } from "./components/WorkspaceHeader/WorkspaceHeader";
 import styles from "./BillWorkspace.module.css";
 
@@ -30,6 +31,7 @@ export function BillWorkspace() {
       <PeopleModal />
       <ItemEditorModal />
       <AssignmentModal />
+      <OrientationGuard />
     </main>
   );
 }

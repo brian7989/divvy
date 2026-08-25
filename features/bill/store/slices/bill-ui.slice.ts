@@ -1,4 +1,5 @@
 import type { StateCreator } from "zustand";
+import { DEFAULT_BILL_TITLE } from "@/features/bill/domain/bill.factory";
 import type { BillStore, BillUiSlice } from "../bill-store.types";
 import { getAdjacentStep } from "../wizard/bill-wizard";
 
@@ -10,10 +11,12 @@ export const createBillUiSlice: StateCreator<BillStore, [], [], BillUiSlice> = (
   set,
 ) => ({
   wizardStep: "people",
+  titleDraft: DEFAULT_BILL_TITLE,
   peopleOpen: false,
   editingItemId: undefined,
   assigningItemId: null,
   goToStep: (wizardStep) => set({ wizardStep }),
+  setTitleDraft: (titleDraft) => set({ titleDraft }),
   nextStep: () =>
     set((state) => ({ wizardStep: getAdjacentStep(state.wizardStep, 1) })),
   previousStep: () =>

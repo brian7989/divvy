@@ -7,7 +7,11 @@ import styles from "@/features/bill/components/BillWorkspace/BillWorkspace.modul
 
 export function PeopleStep() {
   const peopleCount = useBillStore((state) => state.bill.people.length);
+  const titleDraft = useBillStore((state) => state.titleDraft);
+  const updateTitle = useBillStore((state) => state.updateTitle);
   const nextStep = useBillStore((state) => state.nextStep);
+  const hasTitle = Boolean(titleDraft.trim());
+  const canContinue = peopleCount > 0 && hasTitle;
 
   return (
     <div className={styles.stepContent}>
@@ -28,10 +32,17 @@ export function PeopleStep() {
         size="lg"
         radius="xl"
         rightSection={<IconArrowRight size={18} />}
-        onClick={nextStep}
-        disabled={!peopleCount}
+        onClick={() => {
+          updateTitle(titleDraft);
+          nextStep();
+        }}
+        disabled={!canContinue}
       >
-        {peopleCount ? "Continue" : "Add a person to continue"}
+        {!peopleCount
+          ? "Add a person to continue"
+          : hasTitle
+            ? "Continue"
+            : "Name the bill to continue"}
       </Button>
     </div>
   );

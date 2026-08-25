@@ -26,10 +26,12 @@ export type BillSlice = {
 /** Ephemeral modal/navigation state that should reset when the app reloads. */
 export type BillUiSlice = {
   wizardStep: BillWizardStep;
+  titleDraft: string;
   peopleOpen: boolean;
   editingItemId: string | null | undefined;
   assigningItemId: string | null;
   goToStep: (step: BillWizardStep) => void;
+  setTitleDraft: (titleDraft: string) => void;
   nextStep: () => void;
   previousStep: () => void;
   openPeople: () => void;

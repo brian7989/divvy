@@ -17,11 +17,15 @@ export const createBillSlice: StateCreator<BillStore, [], [], BillSlice> = (
   set,
 ) => ({
   bill: createBill(),
-  reset: () => set({ bill: createBill() }),
+  reset: () => {
+    const bill = createBill();
+    set({ bill, titleDraft: bill.title });
+  },
   updateTitle: (title) =>
     set((state) => {
-      return title.trim()
-        ? { bill: touch({ ...state.bill, title }) }
+      const nextTitle = title.trim();
+      return nextTitle
+        ? { bill: touch({ ...state.bill, title: nextTitle }) }
         : state;
     }),
   addPerson: (person) =>

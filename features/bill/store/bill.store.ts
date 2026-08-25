@@ -27,7 +27,11 @@ export const useBillStore = create<BillStore>()(
           (persistedState as Partial<PersistedBillState> | undefined)?.bill,
         );
         return result.success
-          ? { ...currentState, bill: result.data }
+          ? {
+              ...currentState,
+              bill: result.data,
+              titleDraft: result.data.title,
+            }
           : currentState;
       },
     },

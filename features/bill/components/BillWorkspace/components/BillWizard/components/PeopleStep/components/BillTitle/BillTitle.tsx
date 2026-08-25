@@ -1,25 +1,31 @@
 import { ActionIcon, TextInput } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
-import { DEFAULT_BILL_TITLE } from "@/features/bill/domain/bill.factory";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import styles from "@/features/bill/components/BillWorkspace/BillWorkspace.module.css";
 
 export function BillTitle() {
-  const title = useBillStore((state) => state.bill.title);
+  const titleDraft = useBillStore((state) => state.titleDraft);
+  const setTitleDraft = useBillStore((state) => state.setTitleDraft);
   const updateTitle = useBillStore((state) => state.updateTitle);
+  const valid = Boolean(titleDraft.trim());
   return (
     <TextInput
       className={styles.title}
       variant="unstyled"
-      value={title}
-      onChange={(event) => updateTitle(event.currentTarget.value)}
+      value={titleDraft}
+      onChange={(event) => setTitleDraft(event.currentTarget.value)}
+      onBlur={() => {
+        if (valid) updateTitle(titleDraft);
+      }}
+      error={valid ? undefined : "Enter a bill name"}
       rightSection={
-        title !== DEFAULT_BILL_TITLE ? (
+        titleDraft ? (
           <ActionIcon
             variant="subtle"
             color="gray"
             aria-label="Clear bill name"
-            onClick={() => updateTitle(DEFAULT_BILL_TITLE)}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => setTitleDraft("")}
           >
             <IconX size={18} />
           </ActionIcon>

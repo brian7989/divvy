@@ -342,7 +342,10 @@ button.methodCard:hover {
     overflow: hidden;
   }
 
-  .topbar { height: 52px; padding: 0 14px; }
+  .topbar {
+    height: calc(52px + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) 14px 0;
+  }
   .brand { font-size: 20px; }
   .mark { width: 32px; height: 32px; }
   .workspace {

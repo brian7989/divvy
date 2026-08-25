@@ -1,8 +1,6 @@
-import { ActionIcon, Menu } from "@mantine/core";
-import { IconDots, IconEdit } from "@tabler/icons-react";
+import { ActionIcon } from "@mantine/core";
+import { IconEdit } from "@tabler/icons-react";
 import { useBillStore } from "@/features/bill/store/bill.store";
-
-const { Dropdown: MenuDropdown, Item: MenuItem, Target: MenuTarget } = Menu;
 
 type Props = { itemId: string };
 
@@ -12,24 +10,13 @@ export function ItemActions({ itemId }: Props) {
   );
   const editItem = useBillStore((state) => state.editItem);
   return (
-    <Menu position="bottom-end">
-      <MenuTarget>
-        <ActionIcon
-          variant="subtle"
-          color="party"
-          aria-label={`Actions for ${itemName}`}
-        >
-          <IconDots size={18} />
-        </ActionIcon>
-      </MenuTarget>
-      <MenuDropdown>
-        <MenuItem
-          leftSection={<IconEdit size={15} />}
-          onClick={() => editItem(itemId)}
-        >
-          Edit item
-        </MenuItem>
-      </MenuDropdown>
-    </Menu>
+    <ActionIcon
+      variant="subtle"
+      color="party"
+      aria-label={`Edit ${itemName ?? "item"}`}
+      onClick={() => editItem(itemId)}
+    >
+      <IconEdit size={18} />
+    </ActionIcon>
   );
 }

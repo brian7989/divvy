@@ -494,7 +494,7 @@ button.methodCard:not(:disabled):hover {
   .sheetBody {
     flex: 1 1 auto;
     min-height: 0;
-    padding: 16px 16px 8px;
+    padding: 16px 16px 40px;
     overflow-y: auto;
     overscroll-behavior: contain;
   }

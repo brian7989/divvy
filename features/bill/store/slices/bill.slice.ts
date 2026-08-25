@@ -1,6 +1,7 @@
 import type { StateCreator } from "zustand";
-import { createBill } from "@/features/bill/domain/bill.factory";
+import { createBill, createId } from "@/features/bill/domain/bill.factory";
 import type { Bill } from "@/features/bill/domain/bill.schema";
+import type { ParsedReceipt } from "@/features/bill/receipt/receipt.schema";
 import type { BillSlice, BillStore } from "../bill-store.types";
 
 /** Stamps a changed bill so persistence and future sync logic can identify it. */
@@ -8,6 +9,40 @@ const touch = (bill: Bill): Bill => ({
   ...bill,
   updatedAt: new Date().toISOString(),
 });
+
+function getImportedTipPercent(
+  receipt: ParsedReceipt,
+  currentTipPercent: number,
+): number {
+  if (!receipt.tipCents || !receipt.subtotalCents) return currentTipPercent;
+  return Math.round((receipt.tipCents / receipt.subtotalCents) * 10_000) / 100;
+}
+
+/** Merges parsed receipt values without discarding existing manual entries. */
+function mergeReceipt(bill: Bill, receipt: ParsedReceipt): Bill {
+  return {
+    ...bill,
+    items: [
+      ...bill.items,
+      ...receipt.items.map((item) => ({
+        id: createId(),
+        name: item.name,
+        unitPriceCents: item.unitPriceCents,
+        quantity: item.quantity,
+        ownerIds: [],
+      })),
+    ],
+    taxCents: receipt.taxCents ?? bill.taxCents,
+    tipPercent: getImportedTipPercent(receipt, bill.tipPercent),
+    adjustments: [
+      ...bill.adjustments,
+      ...receipt.adjustments.map((adjustment) => ({
+        id: createId(),
+        ...adjustment,
+      })),
+    ],
+  };
+}
 
 /**
  * Creates persisted bill state and actions.
@@ -63,6 +98,8 @@ export const createBillSlice: StateCreator<BillStore, [], [], BillSlice> = (
           : [...state.bill.items, item],
       }),
     })),
+  importReceipt: (receipt) =>
+    set((state) => ({ bill: touch(mergeReceipt(state.bill, receipt)) })),
   removeItem: (itemId) =>
     set((state) => ({
       bill: touch({

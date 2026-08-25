@@ -3,10 +3,9 @@ import {
   IconArrowLeft,
   IconArrowRight,
   IconPencil,
-  IconReceipt,
-  IconSparkles,
 } from "@tabler/icons-react";
 import { useBillStore } from "@/features/bill/store/bill.store";
+import { ReceiptUploadButton } from "./components/ReceiptUploadButton/ReceiptUploadButton";
 import styles from "@/features/bill/components/BillWorkspace/BillWorkspace.module.css";
 
 export function EntryMethodStep() {
@@ -33,16 +32,7 @@ export function EntryMethodStep() {
           <span>Enter each item</span>
           <IconArrowRight className={styles.methodArrow} size={20} />
         </UnstyledButton>
-        <div className={styles.methodCard} data-disabled>
-          <span className={styles.comingSoon}>
-            <IconSparkles size={13} /> Coming soon
-          </span>
-          <span className={styles.methodIcon}>
-            <IconReceipt size={24} />
-          </span>
-          <strong>Upload receipt</strong>
-          <span>Scan items automatically</span>
-        </div>
+        <ReceiptUploadButton />
       </div>
       <Button
         variant="subtle"

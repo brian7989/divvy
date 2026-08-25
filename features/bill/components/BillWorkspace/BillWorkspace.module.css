@@ -208,9 +208,9 @@ button.methodCard:hover {
   box-shadow: 0 10px 0 #d5cbea;
 }
 
-.methodCard[data-disabled] {
-  background: repeating-linear-gradient(-45deg, #f0edf7, #f0edf7 8px, #f7f5fb 8px, #f7f5fb 16px);
-  color: #706a7a;
+.methodCard:disabled {
+  cursor: wait;
+  opacity: 0.78;
 }
 
 .methodIcon {
@@ -241,21 +241,14 @@ button.methodCard:hover {
   bottom: 24px;
 }
 
-.comingSoon {
+.receiptInput {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5px 8px;
-  border-radius: 999px;
-  background: #181622;
-  color: white;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .itemWorkspace,
@@ -330,7 +323,6 @@ button.methodCard:hover {
   .methodCard strong { margin-top: 18px; font-size: 16px; }
   .methodCard > span:last-of-type { font-size: 12px; line-height: 1.25; }
   .methodArrow { right: 13px; bottom: 15px; }
-  .comingSoon { top: 10px; right: 8px; padding: 4px 6px; font-size: 8px; }
   .itemWorkspace, .reviewCard { margin: 22px 0 18px; }
   .stepActions { align-items: stretch; flex-direction: column-reverse; }
   .stepActions > * { width: 100%; }

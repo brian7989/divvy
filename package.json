@@ -21,6 +21,7 @@
     "@mantine/notifications": "^9.5.2",
     "@tabler/icons-react": "^3.46.0",
     "@vercel/analytics": "^2.0.1",
+    "ai": "^7.0.79",
     "next": "^16.3.2",
     "react": "19.2.6",
     "react-dom": "19.2.6",

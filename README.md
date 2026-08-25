@@ -10,6 +10,7 @@ Divvy makes it easy to split shared expenses by what each person owes. No accoun
 
 - Adds everyone at the table
 - Tracks items, quantities, and prices
+- Scans receipt photos into editable items
 - Splits shared items between the right people
 - Distributes tax, tip, fees, and discounts fairly
 - Creates a clear total for each person
@@ -22,17 +23,20 @@ Divvy makes it easy to split shared expenses by what each person owes. No accoun
 3. Add items and assign who shared them.
 4. Review the final split and share the summary.
 
-Receipt scanning is planned. Manual item entry is available now.
+Receipt scanning is available as an AI-powered prototype. Always review scanned
+items and totals before finishing the split.
 
 ## Private by default
 
-Your bill stays in your browser. Divvy does not require an account or send bill details to a server.
+Divvy does not require an account. Bill data stays in your browser. When you
+choose receipt scanning, that image is sent temporarily for AI processing and is
+not added to your saved bill data.
 
 Because there is no cloud sync yet, clearing browser data also clears the saved bill.
 
 ## Run it locally
 
-You’ll need Node.js 22 or newer.
+You’ll need Node.js 24.
 
 ```bash
 npm install
@@ -49,4 +53,4 @@ npm run check
 
 ## Built with
 
-Next.js, React, Mantine, Zustand, Zod, and TypeScript.
+Next.js, React, Mantine, Zustand, Zod, TypeScript, and Vercel AI Gateway.

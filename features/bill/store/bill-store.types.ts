@@ -4,6 +4,7 @@ import type {
   BillItem,
   Person,
 } from "@/features/bill/domain/bill.schema";
+import type { ParsedReceipt } from "@/features/bill/receipt/receipt.schema";
 import type { BillWizardStep } from "./wizard/bill-wizard";
 
 /** Persisted bill data and every action that mutates that data. */
@@ -15,6 +16,7 @@ export type BillSlice = {
   updatePersonName: (personId: string, name: string) => void;
   removePerson: (personId: string) => void;
   saveItem: (item: BillItem) => void;
+  importReceipt: (receipt: ParsedReceipt) => void;
   removeItem: (itemId: string) => void;
   setOwners: (itemId: string, ownerIds: string[]) => void;
   updateTax: (taxCents: number) => void;

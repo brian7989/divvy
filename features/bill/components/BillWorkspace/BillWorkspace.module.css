@@ -382,22 +382,16 @@ button.methodCard:not(:disabled):hover {
   .title input { font-size: 25px !important; }
   .peoplePicker { margin: 8px 0 12px; padding: 10px 12px; }
   .methodGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 20px 0 18px; }
-  .methodCard { min-height: 150px; padding: 14px; border-radius: 18px; }
+  .methodCard { min-height: 0; aspect-ratio: 1; padding: 14px; border-radius: 18px; }
   .methodIcon { width: 38px; height: 38px; }
   .methodCard strong { margin-top: 18px; font-size: 16px; }
   .methodDescription { font-size: 12px; line-height: 1.25; }
   .methodArrow { right: 13px; bottom: 15px; }
   .voiceMethodCard {
     grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    column-gap: 12px;
-    min-height: 88px;
-    text-align: left;
+    justify-self: center;
+    width: calc((100% - 10px) / 2);
   }
-  .voiceMethodCard .methodIcon { margin-bottom: 0; }
-  .voiceMethodCopy strong { margin-top: 0; }
   .comingSoonBadge { top: 10px; right: 12px; font-size: 8px; }
   .itemWorkspace, .reviewCard { margin: 22px 0 18px; }
   .stepFooter > .primaryAction { width: 100%; }
@@ -407,6 +401,7 @@ button.methodCard:not(:disabled):hover {
 
 @media (max-width: 299px) {
   .methodGrid { grid-template-columns: minmax(0, 1fr); }
+  .voiceMethodCard { grid-column: auto; width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { parseReceipt } from "@/features/bill/receipt/parseReceipt";
+import { NotAReceiptError } from "@/features/bill/receipt/receipt-analysis";
 import { reconcileReceipt } from "@/features/bill/receipt/reconcileReceipt";
 
 const MAX_IMAGE_BYTES = 6 * 1024 * 1024;
@@ -46,6 +47,10 @@ export async function POST(request: Request) {
     );
     return NextResponse.json({ receipt, warnings: reconcileReceipt(receipt) });
   } catch (error) {
+    if (error instanceof NotAReceiptError) {
+      return errorResponse("We couldn't parse that as a receipt.", 422);
+    }
+
     console.error("Receipt parsing failed", error);
     return errorResponse(
       "We couldn't read that receipt. Try a clearer photo.",

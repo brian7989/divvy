@@ -1,6 +1,10 @@
 import "server-only";
 import { generateText, NoObjectGeneratedError, Output } from "ai";
-import { ParsedReceiptSchema, type ParsedReceipt } from "./receipt.schema";
+import {
+  getParsedReceipt,
+  ReceiptAnalysisSchema,
+} from "./receipt-analysis";
+import type { ParsedReceipt } from "./receipt.schema";
 
 const RECEIPT_MODEL = "openai/gpt-5.4-mini";
 
@@ -13,12 +17,12 @@ export async function parseReceipt(
     const { output } = await generateText({
       model: RECEIPT_MODEL,
       output: Output.object({
-        name: "receipt",
-        description: "Line items and totals visible on a purchase receipt.",
-        schema: ParsedReceiptSchema,
+        name: "receipt_analysis",
+        description: "Receipt classification and extracted purchase data.",
+        schema: ReceiptAnalysisSchema,
       }),
       system:
-        "You extract receipts accurately. Use integer cents, never decimal dollars. Do not invent obscured values. Exclude subtotal, tax, tip, totals, payment, and change from line items. Only extract tipCents when a tip was actually charged and included in the receipt total. Ignore suggested tip percentages, suggested gratuity amounts, blank tip lines, and examples such as 18%, 20%, or 25%. Put discounts tied to a specific item in that item's discountCents. Put order-level discounts and service charges in adjustments. Use 0 when an item has no discount. lineTotalCents must equal unitPriceCents times quantity minus discountCents. Use ISO 4217 currency codes. If quantity is absent, use 1. If a summary value is absent, return null.",
+        "First decide whether the image is a purchase receipt. Set receiptLikelihood near 0 only when the image is clearly unrelated, such as a person, pet, landscape, screenshot, or document with no purchase transaction. Unusual, handwritten, foreign-language, partial, or blurry receipts should remain uncertain rather than being classified as unrelated. Set receipt to null when the image is not a receipt or no line item can be extracted. When extracting, use integer cents, never decimal dollars. Do not invent obscured values. Exclude subtotal, tax, tip, totals, payment, and change from line items. Only extract tipCents when a tip was actually charged and included in the receipt total. Ignore suggested tips, blank tip lines, and examples such as 18%, 20%, or 25%. Put item discounts on the item and order-level discounts or service charges in adjustments. Use 0 when an item has no discount. lineTotalCents must equal unitPriceCents times quantity minus discountCents. Use ISO 4217 currency codes. If quantity is absent, use 1. If a summary value is absent, return null.",
       messages: [
         {
           role: "user",
@@ -35,7 +39,7 @@ export async function parseReceipt(
       experimental_include: { requestBody: false, responseBody: false },
     });
 
-    return output;
+    return getParsedReceipt(output);
   } catch (error) {
     if (NoObjectGeneratedError.isInstance(error))
       throw new Error("The receipt could not be read clearly.");

@@ -4,6 +4,7 @@ import { useBillStore } from "@/features/bill/store/bill.store";
 import { canContinueFromPeople } from "@/features/bill/store/wizard/bill-wizard";
 import { BillTitle } from "./components/BillTitle/BillTitle";
 import { PeopleBar } from "./components/PeopleBar/PeopleBar";
+import { WizardStepLayout } from "../WizardStepLayout/WizardStepLayout";
 import styles from "@/features/bill/components/BillWorkspace/BillWorkspace.module.css";
 
 export function PeopleStep() {
@@ -14,8 +15,30 @@ export function PeopleStep() {
   const hasTitle = Boolean(titleDraft.trim());
   const canContinue = canContinueFromPeople(peopleCount, titleDraft);
 
+  const actions = (
+    <Button
+      className={styles.primaryAction}
+      size="lg"
+      radius="xl"
+      rightSection={<IconArrowRight size={18} />}
+      onClick={() => {
+        updateTitle(titleDraft);
+        nextStep();
+      }}
+      disabled={!canContinue}
+    >
+      {peopleCount === 0
+        ? "Add two people to continue"
+        : peopleCount === 1
+          ? "Add one more person"
+          : hasTitle
+            ? "Continue"
+            : "Add a bill title to continue"}
+    </Button>
+  );
+
   return (
-    <div className={styles.stepContent}>
+    <WizardStepLayout actions={actions}>
       <div className={styles.stepIcon}>1</div>
       <Text className={styles.eyebrow}>Step 1</Text>
       <Title className={styles.stepTitle}>Who’s at the table?</Title>
@@ -28,25 +51,6 @@ export function PeopleStep() {
       <div className={styles.peoplePicker}>
         <PeopleBar />
       </div>
-      <Button
-        className={styles.primaryAction}
-        size="lg"
-        radius="xl"
-        rightSection={<IconArrowRight size={18} />}
-        onClick={() => {
-          updateTitle(titleDraft);
-          nextStep();
-        }}
-        disabled={!canContinue}
-      >
-        {peopleCount === 0
-          ? "Add two people to continue"
-          : peopleCount === 1
-            ? "Add one more person"
-          : hasTitle
-            ? "Continue"
-            : "Add a bill title to continue"}
-      </Button>
-    </div>
+    </WizardStepLayout>
   );
 }

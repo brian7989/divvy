@@ -6,14 +6,26 @@ import {
 } from "@tabler/icons-react";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { ReceiptUploadButton } from "./components/ReceiptUploadButton/ReceiptUploadButton";
+import { WizardStepLayout } from "../WizardStepLayout/WizardStepLayout";
 import styles from "@/features/bill/components/BillWorkspace/BillWorkspace.module.css";
 
 export function EntryMethodStep() {
   const goToStep = useBillStore((state) => state.goToStep);
   const previousStep = useBillStore((state) => state.previousStep);
 
+  const actions = (
+    <Button
+      variant="subtle"
+      color="party"
+      leftSection={<IconArrowLeft size={18} />}
+      onClick={previousStep}
+    >
+      Back
+    </Button>
+  );
+
   return (
-    <div className={styles.stepContent}>
+    <WizardStepLayout actions={actions}>
       <div className={styles.stepIcon}>2</div>
       <Text className={styles.eyebrow}>Step 2</Text>
       <Title className={styles.stepTitle}>How are we adding items?</Title>
@@ -34,14 +46,6 @@ export function EntryMethodStep() {
         </UnstyledButton>
         <ReceiptUploadButton />
       </div>
-      <Button
-        variant="subtle"
-        color="party"
-        leftSection={<IconArrowLeft size={18} />}
-        onClick={previousStep}
-      >
-        Back
-      </Button>
-    </div>
+    </WizardStepLayout>
   );
 }

@@ -88,9 +88,23 @@
 .stepContent {
   display: flex;
   flex-direction: column;
-  align-items: center;
   min-width: 0;
   text-align: center;
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.stepFooter {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 24px;
 }
 
 .stepIcon {
@@ -282,7 +296,7 @@ button.methodCard:hover {
   .workspace {
     flex: 1 1 auto;
     min-height: 0;
-    padding: 10px 14px max(12px, env(safe-area-inset-bottom));
+    padding: 10px 14px 0;
     overflow: hidden;
   }
 
@@ -297,18 +311,36 @@ button.methodCard:hover {
     flex: 1 1 auto;
     min-width: 0;
     min-height: 0;
-    padding-bottom: 8px;
+    overflow: hidden;
+  }
+  .stepContent {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 100%;
+    overflow: hidden;
+  }
+  .stepBody {
+    flex: 1 1 auto;
+    justify-content: safe center;
+    min-height: 0;
+    padding-bottom: 16px;
     overflow-x: clip;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
   }
-  .stepPanel::-webkit-scrollbar { display: none; }
-  .stepContent {
-    justify-content: safe center;
-    width: 100%;
-    min-width: 0;
-    min-height: 100%;
+  .stepBody::-webkit-scrollbar { display: none; }
+  .stepFooter {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    width: calc(100% + 28px);
+    margin: 0 -14px;
+    padding: 10px 14px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid rgb(24 22 34 / 8%);
+    background: #f8f7ff;
+    box-shadow: 0 -8px 24px rgb(24 22 34 / 5%);
   }
   .stepIcon { width: 44px; height: 44px; margin-bottom: 8px; font-size: 22px; border-radius: 16px 16px 16px 7px; }
   .eyebrow { margin-bottom: 5px; font-size: 10px; }
@@ -324,6 +356,7 @@ button.methodCard:hover {
   .methodCard > span:last-of-type { font-size: 12px; line-height: 1.25; }
   .methodArrow { right: 13px; bottom: 15px; }
   .itemWorkspace, .reviewCard { margin: 22px 0 18px; }
+  .stepFooter > .primaryAction { width: 100%; }
   .stepActions { align-items: stretch; flex-direction: column-reverse; }
   .stepActions > * { width: 100%; }
 }

@@ -81,69 +81,6 @@
   min-width: 0;
 }
 
-.progress {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  max-width: 620px;
-  margin: 0 auto 62px;
-}
-
-.progress::before {
-  content: "";
-  position: absolute;
-  top: 16px;
-  right: 12%;
-  left: 12%;
-  height: 2px;
-  background: #ddd8ec;
-}
-
-.progressStep {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  justify-items: center;
-  gap: 7px;
-  color: #777287;
-  font-size: 12px;
-  font-weight: 750;
-}
-
-.progressStep:disabled {
-  color: #a39eaf;
-  opacity: 1;
-}
-
-.progressStep[data-active],
-.progressStep[data-complete] {
-  color: #181622;
-}
-
-.progressDot {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 2px solid #ddd8ec;
-  border-radius: 50%;
-  background: #f8f7ff;
-  font-size: 12px;
-}
-
-.progressStep[data-active] .progressDot {
-  border-color: #181622;
-  background: #181622;
-  color: white;
-  box-shadow: 0 0 0 5px rgb(117 76 255 / 14%);
-}
-
-.progressStep[data-complete] .progressDot {
-  border-color: #754cff;
-  background: #754cff;
-  color: white;
-}
-
 .stepPanel {
   animation: step-in 240ms ease-out both;
 }
@@ -363,10 +300,6 @@ button.methodCard:hover {
     min-height: 0;
   }
 
-  .progress { margin-bottom: 18px; }
-  .progress::before { top: 14px; }
-  .progressStep { gap: 0; font-size: 0; }
-  .progressDot { width: 30px; height: 30px; font-size: 11px; }
   .stepPanel {
     flex: 1 1 auto;
     min-width: 0;

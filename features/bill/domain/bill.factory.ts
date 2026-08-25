@@ -5,7 +5,7 @@ export const DEFAULT_BILL_TITLE = "New bill";
 /** Creates a collision-resistant identifier for persisted bill entities. */
 export const createId = () => crypto.randomUUID();
 
-/** Creates a fresh bill with the product's default title, tip, and empty data. */
+/** Creates a fresh bill with no charges inferred on the user's behalf. */
 export function createBill(): Bill {
   return {
     id: createId(),
@@ -14,7 +14,7 @@ export function createBill(): Bill {
     people: [],
     items: [],
     taxCents: 0,
-    tipPercent: 20,
+    tipPercent: 0,
     adjustments: [],
     updatedAt: new Date().toISOString(),
   };

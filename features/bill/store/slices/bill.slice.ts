@@ -13,9 +13,8 @@ const touch = (bill: Bill): Bill => ({
 
 function getImportedTipPercent(
   receipt: ParsedReceipt,
-  currentTipPercent: number,
 ): number {
-  if (!receipt.tipCents || !receipt.subtotalCents) return currentTipPercent;
+  if (!receipt.tipCents || !receipt.subtotalCents) return 0;
   return Math.round((receipt.tipCents / receipt.subtotalCents) * 10_000) / 100;
 }
 
@@ -35,7 +34,7 @@ function mergeReceipt(bill: Bill, receipt: ParsedReceipt): Bill {
       })),
     ],
     taxCents: receipt.taxCents ?? bill.taxCents,
-    tipPercent: getImportedTipPercent(receipt, bill.tipPercent),
+    tipPercent: getImportedTipPercent(receipt),
     adjustments: [
       ...bill.adjustments,
       ...receipt.adjustments.map((adjustment) => ({

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import "./globals.css";
@@ -28,6 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${appFont.className} ${appFont.variable}`}>
         <AppProviders>{children}</AppProviders>
+        <Analytics />
       </body>
     </html>
   );

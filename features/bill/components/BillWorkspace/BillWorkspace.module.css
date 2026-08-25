@@ -1,111 +1,368 @@
 .shell {
-  min-height: 100vh;
+  min-height: 100dvh;
   background:
-    radial-gradient(circle at 5% 10%, #fff2d9 0, transparent 24rem), #fbfaf6;
+    radial-gradient(circle at 8% 12%, #dfffa1 0, transparent 25rem),
+    radial-gradient(circle at 92% 28%, #e3d8ff 0, transparent 24rem), #f8f7ff;
+  color: #181622;
 }
+
 .topbar {
-  height: 74px;
-  border-bottom: 1px solid #e5e0d7;
+  height: 72px;
+  border-bottom: 1px solid rgb(24 22 34 / 9%);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 28px;
 }
+
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 800;
-  font-size: 23px;
+  font-weight: 850;
+  font-size: 22px;
   letter-spacing: -1px;
 }
+
 .mark {
-  display: grid;
-  place-items: center;
   width: 35px;
   height: 35px;
-  border-radius: 12px 12px 12px 4px;
-  background: #ff654b;
-  color: white;
-  transform: rotate(-4deg);
-  font-size: 18px;
+  transform: rotate(-5deg);
 }
+
 .workspace {
-  max-width: 1080px;
+  width: min(100%, 880px);
   margin: 0 auto;
-  padding: 56px 30px 100px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 370px;
-  gap: 70px;
-  align-items: start;
+  padding: 42px 28px 96px;
 }
-.main {
+
+.wizard {
   min-width: 0;
 }
-.saved {
-  text-transform: uppercase;
-  font-size: 11px;
-  letter-spacing: 1.3px;
-  font-weight: 700;
-  color: #817d76;
+
+.progress {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 620px;
+  margin: 0 auto 62px;
 }
-.saved::before {
+
+.progress::before {
   content: "";
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #35af7c;
-  box-shadow: 0 0 0 4px #ddf5ea;
-  margin-right: 10px;
+  position: absolute;
+  top: 16px;
+  right: 12%;
+  left: 12%;
+  height: 2px;
+  background: #ddd8ec;
 }
-.title input {
-  font-size: clamp(32px, 5vw, 48px);
-  font-weight: 800;
-  letter-spacing: -2px;
-  line-height: 1.08;
-  padding: 0;
-  height: auto;
-  color: #20201e;
+
+.progressStep {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  color: #777287;
+  font-size: 12px;
+  font-weight: 750;
 }
-.title {
-  margin-top: 14px;
+
+.progressStep:disabled {
+  color: #a39eaf;
+  opacity: 1;
 }
-.people {
-  margin: 24px 0 48px;
+
+.progressStep[data-active],
+.progressStep[data-complete] {
+  color: #181622;
 }
-.sectionTitle {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.step {
+
+.progressDot {
   display: grid;
   place-items: center;
-  flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
-  border-radius: 9px;
-  background: #282725;
-  color: white;
+  width: 34px;
+  height: 34px;
+  border: 2px solid #ddd8ec;
+  border-radius: 50%;
+  background: #f8f7ff;
   font-size: 12px;
+}
+
+.progressStep[data-active] .progressDot {
+  border-color: #181622;
+  background: #181622;
+  color: white;
+  box-shadow: 0 0 0 5px rgb(117 76 255 / 14%);
+}
+
+.progressStep[data-complete] .progressDot {
+  border-color: #754cff;
+  background: #754cff;
+  color: white;
+}
+
+.stepPanel {
+  animation: step-in 240ms ease-out both;
+}
+
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  text-align: center;
+}
+
+.stepIcon {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  margin-bottom: 20px;
+  border: 1px solid rgb(24 22 34 / 10%);
+  border-radius: 22px 22px 22px 8px;
+  transform: rotate(-3deg);
+  background: #c9baff;
+  color: #181622;
+  box-shadow: 0 8px 0 rgb(117 76 255 / 12%);
+  font-size: 28px;
+  font-weight: 850;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: #686275;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.stepTitle {
+  max-width: 720px;
+  font-size: clamp(34px, 7vw, 58px);
+  font-weight: 850;
+  line-height: 0.98;
+  letter-spacing: -2.8px;
+}
+
+.stepIntro {
+  max-width: 540px;
+  margin-top: 16px;
+  color: #625d6d;
+  font-size: clamp(16px, 2.5vw, 19px);
+  line-height: 1.55;
+}
+
+.billName,
+.peoplePicker,
+.itemWorkspace,
+.reviewCard {
+  width: min(100%, 680px);
+}
+
+.billName {
+  margin-top: 38px;
+  padding: 22px 24px;
+  border: 1px solid #ded8ed;
+  border-radius: 20px;
+  background: rgb(255 255 255 / 78%);
+  text-align: left;
+}
+
+.title input {
+  height: auto;
+  padding: 2px 0 5px;
+  color: #181622;
+  font-size: clamp(25px, 6vw, 36px);
+  font-weight: 820;
+  line-height: 1.2;
+  letter-spacing: -1.5px;
+}
+
+.peoplePicker {
+  margin: 18px 0 32px;
+  padding: 20px 22px;
+  border: 1px dashed #c8bfdb;
+  border-radius: 20px;
+  background: rgb(255 255 255 / 45%);
+  text-align: left;
+}
+
+.primaryAction { min-width: 240px; }
+
+.personButton {
+  max-width: 100%;
+}
+
+.personButton :global(.mantine-Button-label) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.methodGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  width: min(100%, 680px);
+  margin: 38px 0 26px;
+  text-align: left;
+}
+
+.methodCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  padding: 25px;
+  overflow: hidden;
+  border: 1px solid #d8d0e8;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 7px 0 #ded7ed;
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+button.methodCard:hover {
+  transform: translateY(-3px) rotate(-0.5deg);
+  box-shadow: 0 10px 0 #d5cbea;
+}
+
+.methodCard[data-disabled] {
+  background: repeating-linear-gradient(-45deg, #f0edf7, #f0edf7 8px, #f7f5fb 8px, #f7f5fb 16px);
+  color: #706a7a;
+}
+
+.methodIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: auto;
+  border-radius: 15px;
+  background: #cfff70;
+  color: #181622;
+}
+
+.methodCard strong {
+  margin-top: 28px;
+  font-size: 21px;
+  letter-spacing: -0.5px;
+}
+
+.methodCard > span:last-of-type {
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.methodArrow {
+  position: absolute;
+  right: 22px;
+  bottom: 24px;
+}
+
+.comingSoon {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #181622;
+  color: white;
+  font-size: 10px;
   font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
-.summary {
-  position: sticky;
-  top: 28px;
+
+.itemWorkspace,
+.reviewCard {
+  margin: 38px 0 24px;
+  text-align: left;
 }
-@media (max-width: 800px) {
+
+.stepActions { width: min(100%, 680px); }
+.reviewCard > div { box-shadow: 0 9px 0 #ded7ed; }
+
+@keyframes step-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@media (max-width: 600px) {
+  .shell {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .topbar { height: 52px; padding: 0 14px; }
+  .brand { font-size: 20px; }
+  .mark { width: 32px; height: 32px; }
   .workspace {
-    grid-template-columns: 1fr;
-    gap: 38px;
-    padding: 34px 18px 70px;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 10px 14px max(12px, env(safe-area-inset-bottom));
+    overflow: hidden;
   }
-  .summary {
-    position: static;
+
+  .wizard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
   }
-  .topbar {
-    height: 64px;
-    padding: 0 18px;
+
+  .progress { margin-bottom: 18px; }
+  .progress::before { top: 14px; }
+  .progressStep { gap: 0; font-size: 0; }
+  .progressDot { width: 30px; height: 30px; font-size: 11px; }
+  .stepPanel {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    padding-bottom: 8px;
+    overflow-x: clip;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
   }
+  .stepPanel::-webkit-scrollbar { display: none; }
+  .stepContent {
+    justify-content: safe center;
+    width: 100%;
+    min-width: 0;
+    min-height: 100%;
+  }
+  .stepIcon { width: 44px; height: 44px; margin-bottom: 8px; font-size: 22px; border-radius: 16px 16px 16px 7px; }
+  .eyebrow { margin-bottom: 5px; font-size: 10px; }
+  .stepTitle { font-size: 32px; line-height: 1; letter-spacing: -1.8px; }
+  .stepIntro { margin-top: 10px; font-size: 15px; line-height: 1.35; }
+  .billName { margin-top: 14px; padding: 12px 16px; }
+  .title input { font-size: 25px; }
+  .peoplePicker { margin: 8px 0 12px; padding: 10px 12px; }
+  .methodGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 20px 0 18px; }
+  .methodCard { min-height: 150px; padding: 14px; border-radius: 18px; }
+  .methodIcon { width: 38px; height: 38px; }
+  .methodCard strong { margin-top: 18px; font-size: 16px; }
+  .methodCard > span:last-of-type { font-size: 12px; line-height: 1.25; }
+  .methodArrow { right: 13px; bottom: 15px; }
+  .comingSoon { top: 10px; right: 8px; padding: 4px 6px; font-size: 8px; }
+  .itemWorkspace, .reviewCard { margin: 22px 0 18px; }
+  .stepActions { align-items: stretch; flex-direction: column-reverse; }
+  .stepActions > * { width: 100%; }
+}
+
+@media (max-width: 299px) {
+  .methodGrid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stepPanel { animation: none; }
 }

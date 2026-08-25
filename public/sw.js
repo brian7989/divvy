@@ -1,5 +1,15 @@
-const VERSION = "divvy-v2";
-const SHELL = ["/", "/manifest.webmanifest", "/icon.svg"];
+const VERSION = "divvy-v9";
+const SHELL = [
+  "/",
+  "/manifest.webmanifest",
+  "/icon.svg",
+  "/icon-maskable.svg",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/icon-maskable-512.png",
+  "/icon.png",
+  "/apple-icon.png",
+];
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -24,15 +34,41 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  if (
-    event.request.method !== "GET" ||
-    new URL(event.request.url).origin !== self.location.origin
-  )
+  const { request } = event;
+  const url = new URL(request.url);
+
+  if (request.method !== "GET" || url.origin !== self.location.origin) return;
+
+  if (request.mode === "navigate") {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const copy = response.clone();
+          void caches.open(VERSION).then((cache) => cache.put(request, copy));
+          return response;
+        })
+        .catch(async () => (await caches.match(request)) ?? caches.match("/")),
+    );
     return;
+  }
+
+  const cacheable =
+    url.pathname.startsWith("/_next/static/") ||
+    ["font", "image", "script", "style"].includes(request.destination);
+
+  if (!cacheable) return;
+
   event.respondWith(
-    fetch(event.request).catch(async () => {
-      const cached = await caches.match(event.request);
-      return cached ?? caches.match("/");
-    }),
+    caches.match(request).then(
+      (cached) =>
+        cached ??
+        fetch(request).then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            void caches.open(VERSION).then((cache) => cache.put(request, copy));
+          }
+          return response;
+        }),
+    ),
   );
 });

@@ -8,12 +8,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:cloudflare": "opennextjs-cloudflare build && node scripts/prepare-sites-build.mjs",
     "start": "next start",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
-    "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run build:cloudflare"
+    "lint": "eslint .",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
     "@mantine/core": "^9.5.2",
@@ -21,7 +20,6 @@
     "@mantine/modals": "^9.5.2",
     "@mantine/notifications": "^9.5.2",
     "@tabler/icons-react": "^3.46.0",
-    "dexie": "^4.4.5",
     "next": "^16.3.2",
     "react": "19.2.6",
     "react-dom": "19.2.6",
@@ -30,8 +28,7 @@
   },
   "devDependencies": {
     "@eslint/js": "9.39.4",
-    "@next/eslint-plugin-next": "16.2.6",
-    "@opennextjs/cloudflare": "^1.20.2",
+    "@next/eslint-plugin-next": "^16.3.2",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
@@ -40,7 +37,6 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "7.1.1",
     "globals": "16.4.0",
-    "prettier": "^3.9.6",
     "typescript": "5.9.3",
     "typescript-eslint": "8.59.3",
     "vitest": "^4.1.11"

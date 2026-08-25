@@ -1,22 +1,52 @@
-# Divvy
+<div align="center">
+  <img src="./public/icon.svg" width="88" alt="Divvy app icon" />
+  <h1>Divvy</h1>
+  <p>Split the bill, not the vibe.</p>
+</div>
 
-A device-local PWA built with the official Next.js App Router for splitting restaurant bills by item ownership.
+Divvy makes it easy to split shared expenses by what each person owes. No accounts, no spreadsheet, and no awkward group-chat math.
 
-## Commands
+## What it does
+
+- Adds everyone at the table
+- Tracks items, quantities, and prices
+- Splits shared items between the right people
+- Distributes tax, tip, fees, and discounts fairly
+- Creates a clear total for each person
+- Works on phones and can be installed like an app
+
+## How it works
+
+1. Add the people splitting the bill.
+2. Choose how to add expenses.
+3. Add items and assign who shared them.
+4. Review the final split and share the summary.
+
+Receipt scanning is planned. Manual item entry is available now.
+
+## Private by default
+
+Your bill stays in your browser. Divvy does not require an account or send bill details to a server.
+
+Because there is no cloud sync yet, clearing browser data also clears the saved bill.
+
+## Run it locally
+
+You’ll need Node.js 22 or newer.
 
 ```bash
+npm install
 npm run dev
+```
+
+Then open [http://localhost:3000](http://localhost:3000).
+
+To run the full project check:
+
+```bash
 npm run check
 ```
 
-## Architecture
+## Built with
 
-- `app/` contains the route, providers, metadata, and global styles.
-- `features/bill/components/` mirrors the runtime component tree.
-- `features/bill/model/` contains schemas, state transitions, and pure calculations.
-- `features/bill/hooks/` owns client lifecycle integration.
-- `features/bill/repositories/` is the IndexedDB persistence boundary.
-
-Imports flow from routes to features, then from components to hooks/model/repositories. Monetary values are stored as integer cents and allocated deterministically.
-
-`npm run build` produces the standard Next.js application. `npm run build:cloudflare` adapts that build with OpenNext for the existing Cloudflare deployment target.
+Next.js, React, Mantine, Zustand, Zod, and TypeScript.

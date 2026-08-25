@@ -1,0 +1,104 @@
+.sheetLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.sheetBody {
+  min-height: 0;
+}
+
+.sheetFooter {
+  position: sticky;
+  z-index: 2;
+  bottom: 0;
+  margin: 16px -16px -16px;
+  padding: 12px 16px;
+  border-top: 1px solid #e5deff;
+  background: white;
+}
+
+.sheetFooter :global(.mantine-Button-root) {
+  min-height: 48px;
+}
+
+.closeButton {
+  width: 44px;
+  height: 44px;
+}
+
+.assigneeButton {
+  min-height: 48px;
+}
+
+.personRow {
+  flex-wrap: nowrap;
+}
+
+.personName {
+  min-width: 0;
+  flex: 1;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+.fieldLabel {
+  display: block;
+  margin-bottom: 5px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+}
+
+.quantityInput {
+  min-width: 0;
+  flex: 1;
+}
+
+.quantityInput input {
+  min-width: 0;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .modalInner {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modalContent {
+    width: 100%;
+    max-height: 88dvh;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .modalHeader {
+    position: sticky;
+    z-index: 3;
+    top: 0;
+    min-height: 60px;
+    padding: max(8px, env(safe-area-inset-top)) 16px 8px;
+    border-bottom: 1px solid #e5deff;
+    background: white;
+  }
+
+  .modalBody {
+    padding: 16px;
+  }
+
+  .sheetFooter {
+    margin-bottom: -16px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .numberInput :global(.mantine-Input-input),
+  .textInput :global(.mantine-Input-input) {
+    min-height: 48px;
+  }
+
+  .fieldGrid { grid-template-columns: minmax(0, 1fr); }
+}

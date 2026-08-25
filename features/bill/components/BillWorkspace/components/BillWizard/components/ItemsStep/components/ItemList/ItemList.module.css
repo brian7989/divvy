@@ -1,0 +1,24 @@
+.item {
+  border: 1px solid #ded8ed;
+  background: white;
+  border-radius: 16px;
+  padding: 13px 16px;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+.item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgb(117 76 255 / 9%);
+}
+.unassigned {
+  border-style: dashed;
+  background: #f9f8ff;
+}
+.avatars > * {
+  margin-left: -7px;
+  border: 2px solid white;
+}
+.avatars > *:first-child {
+  margin-left: 0;
+}

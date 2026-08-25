@@ -1,28 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import "./globals.css";
 import { AppProviders } from "./providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const appFont = Plus_Jakarta_Sans({
+  variable: "--font-app-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Divvy — Split the bill, not the vibe",
-  description: "A fast, friendly way to split restaurant bills fairly.",
-  manifest: "/manifest.webmanifest",
+  description: "A fast, friendly way to split shared expenses fairly.",
   appleWebApp: { capable: true, title: "Divvy", statusBarStyle: "default" },
-  icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
-  },
 };
 
-export const viewport: Viewport = { themeColor: "#fbfaf6" };
+export const viewport: Viewport = { themeColor: "#754cff" };
 
 export default function RootLayout({
   children,
@@ -31,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} antialiased`}>
+      <body className={`${appFont.className} ${appFont.variable}`}>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

@@ -20,7 +20,7 @@ export function PeopleStep() {
       <Text className={styles.eyebrow}>Step 1</Text>
       <Title className={styles.stepTitle}>Who’s at the table?</Title>
       <Text className={styles.stepIntro}>
-        Name the bill and add everyone splitting it.
+        Add a bill title and everyone splitting it.
       </Text>
       <div className={styles.billName}>
         <BillTitle />
@@ -45,7 +45,7 @@ export function PeopleStep() {
             ? "Add one more person"
           : hasTitle
             ? "Continue"
-            : "Name the bill to continue"}
+            : "Add a bill title to continue"}
       </Button>
     </div>
   );

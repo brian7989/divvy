@@ -12,6 +12,7 @@ export function BillTitle() {
     <TextInput
       className={styles.title}
       variant="unstyled"
+      id="bill-title"
       name="bill-title"
       autoComplete="off"
       autoCapitalize="words"
@@ -21,13 +22,13 @@ export function BillTitle() {
       onBlur={() => {
         if (valid) updateTitle(titleDraft);
       }}
-      error={valid ? undefined : "Enter a bill name"}
+      error={valid ? undefined : "Enter a bill title"}
       rightSection={
         titleDraft ? (
           <ActionIcon
             variant="subtle"
             color="gray"
-            aria-label="Clear bill name"
+            aria-label="Clear bill title"
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => setTitleDraft("")}
           >
@@ -35,7 +36,7 @@ export function BillTitle() {
           </ActionIcon>
         ) : null
       }
-      aria-label="Bill name"
+      aria-label="Bill title"
     />
   );
 }

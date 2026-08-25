@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { createId } from "@/features/bill/domain/bill.factory";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { centsToDollars, dollarsToCents } from "@/features/bill/domain/money";
-import styles from "../BillModals.module.css";
+import styles from "../../BillWorkspace.module.css";
 import { QuantityInput } from "./components/QuantityInput/QuantityInput";
 
 type FormValues = {

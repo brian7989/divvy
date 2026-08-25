@@ -2,7 +2,7 @@ import { Button, Modal, Stack } from "@mantine/core";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { AddPersonForm } from "./components/AddPersonForm/AddPersonForm";
 import { PersonList } from "./components/PersonList/PersonList";
-import styles from "../BillModals.module.css";
+import styles from "../../BillWorkspace.module.css";
 
 export function PeopleModal() {
   const opened = useBillStore((state) => state.peopleOpen);

@@ -8,7 +8,7 @@ import {
 } from "@mantine/core";
 import { centsToDollars, dollarsToCents } from "@/features/bill/domain/money";
 import { useBillStore } from "@/features/bill/store/bill.store";
-import modalStyles from "@/features/bill/components/BillWorkspace/components/modals/BillModals.module.css";
+import modalStyles from "@/features/bill/components/BillWorkspace/BillWorkspace.module.css";
 import { AdjustmentsEditor } from "../AdjustmentsEditor/AdjustmentsEditor";
 
 type Props = {

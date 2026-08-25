@@ -1,7 +1,7 @@
 import { ActionIcon, Group, Input, NumberInput } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import type { ReactNode } from "react";
-import styles from "../../../BillModals.module.css";
+import styles from "../../../../BillWorkspace.module.css";
 
 const { Label: InputLabel } = Input;
 

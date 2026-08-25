@@ -4,7 +4,7 @@ import { AssigneeGrid } from "./components/AssigneeGrid/AssigneeGrid";
 import { AssignmentFooter } from "./components/AssignmentFooter/AssignmentFooter";
 import { AssignmentHeader } from "./components/AssignmentHeader/AssignmentHeader";
 import { AssignEveryoneButton } from "./components/AssignEveryoneButton/AssignEveryoneButton";
-import styles from "../BillModals.module.css";
+import styles from "../../BillWorkspace.module.css";
 
 export function AssignmentModal() {
   const itemId = useBillStore((state) => state.assigningItemId);

@@ -2,7 +2,7 @@ import { ActionIcon, Group, TextInput } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { PersonAvatar } from "@/features/bill/shared/components/PersonAvatar/PersonAvatar";
-import styles from "../../../../../BillModals.module.css";
+import styles from "../../../../../../BillWorkspace.module.css";
 
 type Props = { personId: string };
 

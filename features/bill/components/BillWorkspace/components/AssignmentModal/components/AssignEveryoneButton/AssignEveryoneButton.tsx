@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 import { useBillStore } from "@/features/bill/store/bill.store";
-import styles from "../../../BillModals.module.css";
+import styles from "../../../../BillWorkspace.module.css";
 
 export function AssignEveryoneButton() {
   const itemId = useBillStore((state) => state.assigningItemId);

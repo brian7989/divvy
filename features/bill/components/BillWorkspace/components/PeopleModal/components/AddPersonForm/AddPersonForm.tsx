@@ -3,7 +3,7 @@ import { useForm } from "@mantine/form";
 import { createId } from "@/features/bill/domain/bill.factory";
 import { getPersonColor } from "@/features/bill/domain/person-colors";
 import { useBillStore } from "@/features/bill/store/bill.store";
-import styles from "../../../BillModals.module.css";
+import styles from "../../../../BillWorkspace.module.css";
 
 export function AddPersonForm() {
   const peopleCount = useBillStore((state) => state.bill.people.length);

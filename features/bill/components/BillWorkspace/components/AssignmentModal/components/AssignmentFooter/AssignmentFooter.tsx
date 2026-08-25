@@ -2,7 +2,7 @@ import { Button, Group, Stack, Text } from "@mantine/core";
 import { useBillStore } from "@/features/bill/store/bill.store";
 import { formatMoney } from "@/features/bill/domain/money";
 import { getItemTotal } from "@/features/bill/domain/getItemTotal";
-import styles from "../../../BillModals.module.css";
+import styles from "../../../../BillWorkspace.module.css";
 
 export function AssignmentFooter() {
   const itemId = useBillStore((state) => state.assigningItemId);

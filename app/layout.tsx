@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     title: "Divvy",
     statusBarStyle: "black-translucent",
   },
+  other: { "apple-mobile-web-app-capable": "yes" },
 };
 
 export const viewport: Viewport = {

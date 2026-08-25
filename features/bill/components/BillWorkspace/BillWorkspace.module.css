@@ -7,6 +7,7 @@
 .topbar {
   height: calc(72px + env(safe-area-inset-top));
   border-bottom: 1px solid rgb(24 22 34 / 9%);
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;

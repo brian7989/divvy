@@ -5,7 +5,7 @@ import {
 } from "../domain/calculateBill";
 import { allocateCents, formatMoney } from "../domain/money";
 import { getPersonEmoji } from "../domain/person-emojis";
-import { getItemTotal } from "../domain/getItemTotal";
+import { allocateBillItems } from "../domain/allocateBillItems";
 import type {
   BillShareData,
   BillShareLine,
@@ -27,18 +27,21 @@ function buildItemLines(bill: Bill): Map<string, BillShareLine[]> {
   const lines = new Map<string, BillShareLine[]>(
     bill.people.map((person) => [person.id, [] as BillShareLine[]]),
   );
+  const itemAllocations = new Map(
+    allocateBillItems(bill).allocations.map(({ itemId, portions }) => [
+      itemId,
+      portions,
+    ]),
+  );
   bill.items.forEach((item) => {
     const owners = bill.people.filter((person) =>
       item.ownerIds.includes(person.id),
     );
-    const portions = allocateCents(
-      getItemTotal(item),
-      owners.map(() => 1),
-    );
-    owners.forEach((owner, index) =>
+    const portions = itemAllocations.get(item.id);
+    owners.forEach((owner) =>
       lines.get(owner.id)?.push({
         label: getItemLabel(item, owners.length),
-        amountCents: portions[index],
+        amountCents: portions?.get(owner.id) ?? 0,
       }),
     );
   });
@@ -63,6 +66,7 @@ function buildExtraLines(
   components: ExtraComponent[],
   weights: number[],
   expectedTotals: number[],
+  roundingLabel: string,
 ): BillShareLine[][] {
   const lines = weights.map(() => [] as BillShareLine[]);
   components.forEach((component) => {
@@ -78,8 +82,10 @@ function buildExtraLines(
     );
     const roundingDelta = expectedTotals[index] - allocated;
     if (!roundingDelta) return;
-    if (personLines[0]) personLines[0].amountCents += roundingDelta;
-    else personLines.push({ label: "Other", amountCents: roundingDelta });
+    personLines.push({
+      label: roundingLabel,
+      amountCents: roundingDelta,
+    });
   });
   return lines;
 }
@@ -89,10 +95,12 @@ function buildPersonSections(
   totals: BillTotals,
 ): PersonShareSection[] {
   const itemLines = buildItemLines(bill);
+  const exactShares = allocateBillItems(bill).exactShares;
   const extras = buildExtraLines(
     getExtraComponents(bill, totals.tipCents),
-    totals.shares.map((share) => share.itemsCents),
+    totals.shares.map((share) => exactShares.get(share.person.id) ?? 0),
     totals.shares.map((share) => share.extrasCents),
+    totals.roundingCents ? "Equal-split rounding" : "Rounding",
   );
 
   return totals.shares.map((share, index) => ({

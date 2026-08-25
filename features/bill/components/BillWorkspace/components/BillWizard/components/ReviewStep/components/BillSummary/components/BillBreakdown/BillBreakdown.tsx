@@ -14,6 +14,12 @@ export function BillBreakdown() {
         value={formatMoney(taxCents + totals.adjustmentsCents)}
       />
       <SummaryRow label="Tip · pre-tax" value={formatMoney(totals.tipCents)} />
+      {totals.roundingCents !== 0 && (
+        <SummaryRow
+          label="Equal-split rounding"
+          value={formatMoney(totals.roundingCents)}
+        />
+      )}
     </>
   );
 }

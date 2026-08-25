@@ -1,6 +1,6 @@
 import type { Bill, Person } from "./bill.schema";
 import { allocateCents, type Cents } from "./money";
-import { getItemTotal } from "./getItemTotal";
+import { allocateBillItems } from "./allocateBillItems";
 
 export type PersonShare = {
   person: Person;
@@ -12,41 +12,19 @@ export type BillTotals = {
   subtotalCents: Cents;
   adjustmentsCents: Cents;
   tipCents: Cents;
+  roundingCents: Cents;
   totalCents: Cents;
   unassignedCount: number;
   shares: PersonShare[];
 };
 
 /**
- * Splits items equally among owners, then allocates extras proportionally.
- * Integer-cent math ensures every share reconciles to the bill total.
+ * Balances item rounding, then equalizes people with identical responsibility.
+ * A small explicit rounding adjustment may prioritize equal payments.
  */
 export function calculateBill(bill: Bill): BillTotals {
-  const itemShares = new Map(bill.people.map((person) => [person.id, 0]));
-  let subtotalCents = 0;
-  let unassignedCount = 0;
-
-  for (const item of bill.items) {
-    const total = getItemTotal(item);
-    subtotalCents += total;
-    const owners = bill.people.filter((person) =>
-      item.ownerIds.includes(person.id),
-    );
-    if (!owners.length) {
-      unassignedCount += 1;
-      continue;
-    }
-    const portions = allocateCents(
-      total,
-      owners.map(() => 1),
-    );
-    owners.forEach((owner, index) =>
-      itemShares.set(
-        owner.id,
-        (itemShares.get(owner.id) ?? 0) + portions[index],
-      ),
-    );
-  }
+  const { exactShares, itemShares, subtotalCents, unassignedCount } =
+    allocateBillItems(bill);
 
   const adjustmentsCents = bill.adjustments.reduce(
     (sum, adjustment) =>
@@ -58,9 +36,9 @@ export function calculateBill(bill: Bill): BillTotals {
   );
   const tipCents = Math.round((subtotalCents * bill.tipPercent) / 100);
   const extrasCents = bill.taxCents + adjustmentsCents + tipCents;
-  const weights = bill.people.map((person) => itemShares.get(person.id) ?? 0);
+  const weights = bill.people.map((person) => exactShares.get(person.id) ?? 0);
   const extras = allocateCents(extrasCents, weights);
-  const shares = bill.people.map((person, index) => {
+  let shares = bill.people.map((person, index) => {
     const itemsCents = itemShares.get(person.id) ?? 0;
     return {
       person,
@@ -69,12 +47,40 @@ export function calculateBill(bill: Bill): BillTotals {
       totalCents: itemsCents + extras[index],
     };
   });
+  const sourceTotalCents = subtotalCents + extrasCents;
+  const activeExactShares = [...exactShares.values()].filter(
+    (share) => share > 0,
+  );
+  const equallyResponsible = activeExactShares.every(
+    (share) => Math.abs(share - activeExactShares[0]) < 0.000_001,
+  );
+
+  if (activeExactShares.length > 1 && equallyResponsible) {
+    const equalTotalCents = Math.round(
+      sourceTotalCents / activeExactShares.length,
+    );
+    shares = shares.map((share) =>
+      (exactShares.get(share.person.id) ?? 0) > 0
+        ? {
+            ...share,
+            extrasCents: equalTotalCents - share.itemsCents,
+            totalCents: equalTotalCents,
+          }
+        : share,
+    );
+  }
+
+  const collectedTotalCents = shares.reduce(
+    (sum, share) => sum + share.totalCents,
+    0,
+  );
 
   return {
     subtotalCents,
     adjustmentsCents,
     tipCents,
-    totalCents: subtotalCents + extrasCents,
+    roundingCents: collectedTotalCents - sourceTotalCents,
+    totalCents: collectedTotalCents,
     unassignedCount,
     shares,
   };

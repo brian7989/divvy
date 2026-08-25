@@ -121,23 +121,22 @@ export function ItemEditorModal() {
                 hideControls
                 {...form.getInputProps("price")}
               />
-              <QuantityInput
-                value={form.values.quantity}
-                onChange={(quantity) => form.setFieldValue("quantity", quantity)}
-                onBlur={() => form.validateField("quantity")}
-                error={form.errors.quantity}
+              <NumberInput
+                className={styles.numberInput}
+                size="md"
+                label="Item discount"
+                prefix="$"
+                decimalScale={2}
+                min={0}
+                hideControls
+                {...form.getInputProps("discount")}
               />
             </div>
-            <NumberInput
-              className={styles.numberInput}
-              size="md"
-              label="Item discount"
-              description="Applied to this full line"
-              prefix="$"
-              decimalScale={2}
-              min={0}
-              hideControls
-              {...form.getInputProps("discount")}
+            <QuantityInput
+              value={form.values.quantity}
+              onChange={(quantity) => form.setFieldValue("quantity", quantity)}
+              onBlur={() => form.validateField("quantity")}
+              error={form.errors.quantity}
             />
           </Stack>
         </div>

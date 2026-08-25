@@ -1,7 +1,9 @@
-import { ActionIcon, Group, NumberInput } from "@mantine/core";
+import { ActionIcon, Group, Input, NumberInput } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 import styles from "../../../BillModals.module.css";
+
+const { Label: InputLabel } = Input;
 
 type Props = {
   value: number;
@@ -15,9 +17,9 @@ export function QuantityInput({ value, onChange, onBlur, error }: Props) {
 
   return (
     <div>
-      <label className={styles.fieldLabel} htmlFor="item-quantity">
+      <InputLabel mb={5} htmlFor="item-quantity">
         Quantity
-      </label>
+      </InputLabel>
       <Group gap="xs" wrap="nowrap">
         <ActionIcon
           size={44}

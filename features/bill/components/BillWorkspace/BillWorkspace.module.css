@@ -5,9 +5,9 @@
 }
 
 .topbar {
+  position: relative;
+  z-index: 1;
   height: calc(72px + env(safe-area-inset-top));
-  border-bottom: 1px solid rgb(24 22 34 / 9%);
-  background: #f8f7ff;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,6 +27,18 @@
   width: 35px;
   height: 35px;
   transform: rotate(-5deg);
+}
+
+.headerAction {
+  border: 1px solid rgb(24 22 34 / 9%);
+  background: rgb(255 255 255 / 48%);
+  color: #181622;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 4px 16px rgb(79 58 159 / 8%);
+}
+
+.headerAction:hover {
+  background: rgb(255 255 255 / 72%);
 }
 
 .orientationGuard {

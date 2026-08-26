@@ -39,7 +39,8 @@ export function WorkspaceHeader() {
       </div>
       <Tooltip label="Start a new bill">
         <ActionIcon
-          variant="default"
+          className={styles.headerAction}
+          variant="subtle"
           radius="xl"
           size="lg"
           onClick={startNewBill}

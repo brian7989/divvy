@@ -1,4 +1,4 @@
-import { createTheme } from "@mantine/core";
+import { createTheme, Modal } from "@mantine/core";
 
 /** Shared Mantine design tokens for Divvy's color, radius, and typography. */
 export const theme = createTheme({
@@ -21,5 +21,12 @@ export const theme = createTheme({
   fontFamily: "var(--font-app-sans), system-ui, sans-serif",
   headings: {
     fontFamily: "var(--font-app-sans), system-ui, sans-serif",
+  },
+  components: {
+    Modal: Modal.extend({
+      defaultProps: {
+        removeScrollProps: { noRelative: true },
+      },
+    }),
   },
 });

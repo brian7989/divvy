@@ -9,7 +9,7 @@ import { theme } from "./theme/theme";
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <MantineProvider theme={theme} defaultColorScheme="light">
-      <ModalsProvider>
+      <ModalsProvider modalProps={{ centered: true }}>
         <Notifications position="top-right" />
         {children}
       </ModalsProvider>
